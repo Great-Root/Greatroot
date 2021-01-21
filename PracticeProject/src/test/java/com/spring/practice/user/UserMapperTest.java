@@ -21,16 +21,16 @@ public class UserMapperTest {
 	
 	@Test
 	public void userRegisterTest() {
-		UserVO user = new UserVO();
-		System.out.println("회원가입 테스트 시작~");
-		user.setAccount("testId");
-		user.setPassword("testPw");
-		user.setNickname("testNick");
-		user.setEmail("testEmail");
-		user.setBirthday(new Date(1993-10-22));
-		mapper.register(user);
-		
-		System.out.println("회원가입 테스트끝");
+//		UserVO user = new UserVO();
+//		System.out.println("회원가입 테스트 시작~");
+//		user.setAccount("testId");
+//		user.setPassword("testPw");
+//		user.setNickname("testNick");
+//		user.setEmail("testEmail");
+//		user.setBirthday(new Date(1993-10-22));
+//		mapper.register(user);
+//		
+//		System.out.println("회원가입 테스트끝");
 		
 	}
 
