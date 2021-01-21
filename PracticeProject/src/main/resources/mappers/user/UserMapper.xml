@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.practice.user.repository.IUserMapper">
+
+	<resultMap id="UserMap" type="com.spring.practice.user.model.UserVO">
+		<id property="account" column="account" />
+		<result property="password" column="password" />
+		<result property="nickname" column="nickname" />
+		<result property="birthday" column="birthday" />
+		<result property="email" column="email" />
+		<result property="regDate" column="reg_date" />
+		<result property="sessionId" column="session_id" />
+		<result property="limitTime" column="limit_time" />
+		<result property="authority" column="authority" />
+	</resultMap>
+
+	<insert id="register">
+		INSERT INTO practice_user
+		(account, password, nickname, birthday, email)
+		VALUES (#{account}, #{password}, #{nickname}, #{birthday, jdbcType=VARCHAR},#{email})
+	</insert>
+	
+	<select id="checkAccount" resultType="int">
+		SELECT COUNT(account)
+		FROM practice_user
+		WHERE account=#{account}
+	</select>
+	
+	<select id="checkNickName" resultType="int">
+		SELECT COUNT(nickname)
+		FROM practice_user
+		WHERE nickname=#{nickname}
+	</select>
+	
+	<delete id="deleteAccount">
+		DELETE FROM practice_user
+		WHERE account=#{account}
+	</delete>
+	
+	<select id="getOneUserInfo" resultMap="UserMap">
+		SELECT * FROM practice_user
+		WHERE account=#{account}
+	</select>
+	
+	<select id="getUserList" resultMap="UserMap">
+		SELECT * FROM practice_user
+	</select>
+	
+	<update id="keepLogin">
+		UPDATE practice_user
+		SET session_id=#{sessionId},
+		limit_time=#{limitDate}
+		WHERE account=#{account}
+	</update>
+	
+	 <select id="getUserWithSessionId" resultMap="UserMap">
+	 	SELECT * FROM practice_user
+	 	WHERE session_id=#{sessionId}
+	 </select>
+
+</mapper>
