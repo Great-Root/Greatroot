@@ -85,11 +85,7 @@
 	</div>
 
 	<!-- Scripts -->
-	<script src="<c:url value='/resources/assets/js/jquery.min.js' />"></script>
-	<script src="<c:url value='/resources/assets/js/browser.min.js' />"></script>
-	<script src="<c:url value='/resources/assets/js/breakpoints.min.js' />"></script>
-	<script src="<c:url value='/resources/assets/js/util.js' />"></script>
-	<script src="<c:url value='/resources/assets/js/main.js' />"></script>
+
 	<script src="<c:url value='/resources/assets/js/register.js' />"></script>
 </body>
 </html>

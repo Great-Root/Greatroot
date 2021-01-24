@@ -38,12 +38,10 @@
 							</h1>
 							<p>지금까지 배웠던 Spring에 대한 것을 적용해보면서 연습하는 페이지입니다.</p>
 						</header>
-						<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu.
-							Proin aliquam facilisis ante interdum congue. Integer mollis,
-							nisl amet convallis, porttitor magna ullamcorper, amet egestas
-							mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id
-							euismod egestas. Pellentesque sapien ac quam. Lorem ipsum dolor
-							sit nullam.</p>
+						<p>게시판은 로그인을 해야만 볼 수 있습니다!<br>
+						좋아요 와 싫어요 버튼은 아직 비활성화 상태입니다.<br>
+						Set이나 Map을 이용해 중복 클릭이 안되겠끔 만들어볼 생각입니다.<br>
+						빠른 시일 내에 구현해 볼게요~ 조금만 기다려 주세용~ ㅎㅎ</p>
 						<ul class="actions">
 							<li><a href="#" class="button big">Learn More</a></li>
 						</ul>

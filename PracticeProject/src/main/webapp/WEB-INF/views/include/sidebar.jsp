@@ -42,7 +42,7 @@
 					<ul>
 						<li><a href="http://www.naver.com" target="_blank">naver</a></li>
 					</ul></li>
-				<li><a href="<c:url value='/board/list'/>">Board</a></li>
+				<li><a href="<c:url value='/board/list'/>" ${login == null ? "onclick=\"return confirm('로그인을 먼저 해주세요~')\"" : "" }>Board</a></li>
 
 
 			</ul>
