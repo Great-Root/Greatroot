@@ -33,6 +33,12 @@ public class UserService implements IUserService {
 	public int checkNickName(String nickname) {
 		return mapper.checkNickName(nickname);
 	}
+	
+	@Override
+	public void updateAccount(UserVO user) {
+		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+		mapper.updateAccount(user);
+	}
 
 	@Override
 	public void deleteAccount(String account) {

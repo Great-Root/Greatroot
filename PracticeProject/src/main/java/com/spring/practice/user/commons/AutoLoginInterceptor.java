@@ -1,4 +1,4 @@
-package com.spring.practice.board.commons;
+package com.spring.practice.user.commons;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

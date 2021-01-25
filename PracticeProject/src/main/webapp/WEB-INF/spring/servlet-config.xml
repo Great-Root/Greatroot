@@ -24,8 +24,8 @@
 	<context:component-scan base-package="com.spring.practice" />
 	
 	<!-- 인터셉터 빈 등록 -->
-	<beans:bean id="boardInterceptor" class="com.spring.practice.user.commons.BoardInterceptor" />
-	<beans:bean id="autoLoginInterceptor" class="com.spring.practice.board.commons.AutoLoginInterceptor" />
+	<beans:bean id="boardInterceptor" class="com.spring.practice.board.commons.BoardInterceptor" />
+	<beans:bean id="autoLoginInterceptor" class="com.spring.practice.user.commons.AutoLoginInterceptor" />
 	
 	<interceptors>
 		
@@ -38,7 +38,7 @@
 			<mapping path="/board/*"/>	
 			<beans:ref bean="boardInterceptor" />
 		</interceptor>
-	
+		
 	</interceptors>
 	
 </beans:beans>

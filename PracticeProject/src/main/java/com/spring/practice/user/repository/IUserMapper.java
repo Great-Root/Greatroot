@@ -17,6 +17,9 @@ public interface IUserMapper {
 	//닉네임 중복 체크 기능
 	int checkNickName(String nickname);
 	
+	//회원 정보 수정 기능
+	void updateAccount(UserVO user);
+	
 	//회원 탈퇴 기능
 	void deleteAccount(String account);
 	

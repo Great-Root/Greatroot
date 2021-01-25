@@ -34,6 +34,16 @@
 		WHERE nickname=#{nickname}
 	</select>
 	
+	<update id="updateAccount">
+		UPDATE practice_user
+		SET password = #{password},
+			nickname = #{nickname},
+			birthday = #{birthday, jdbcType=VARCHAR},
+			email = #{email}
+		WHERE account = #{account}
+		
+	</update>
+	
 	<delete id="deleteAccount">
 		DELETE FROM practice_user
 		WHERE account=#{account}

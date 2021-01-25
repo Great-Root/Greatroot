@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,6 +81,7 @@ public class UserController {
 		return (checkNick == 0 ? "OK" : "NO");
 	}
 	
+	//회원가입
 	@GetMapping("/register")
 	public ModelAndView register() {
 		return new ModelAndView("/user/register");
@@ -89,6 +91,34 @@ public class UserController {
 	public String register(@RequestBody UserVO user) {
 		service.register(user);
 		return "joinSuccess";
+	}
+	
+	//회원정보변경
+	@GetMapping("/modifyUserInfo")
+	public ModelAndView modifyUserInfo(HttpSession session) {
+		UserVO vo = (UserVO) session.getAttribute("login");
+		ModelAndView mv = new ModelAndView();
+		if(vo != null) {
+			mv.setViewName("user/register");
+			mv.addObject("user", service.getOneUserInfo(vo.getAccount()));
+		}else {
+			mv.setViewName("redirect:/");
+		}
+		return mv;
+	}
+	
+	@PostMapping("/modifyUserInfo")
+	public String modifyUserInfo(@RequestBody UserVO user) {
+		service.updateAccount(user);
+		return "modifySuccess";
+	}
+	
+	@PostMapping("/modifyChk")
+	public String modifyChk(@RequestBody String pw, HttpSession session) {
+		UserVO dbData = (UserVO) session.getAttribute("login");
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String result = encoder.matches(pw, dbData.getPassword()) ? "success" : "fail";
+		return result;
 	}
 	
 }

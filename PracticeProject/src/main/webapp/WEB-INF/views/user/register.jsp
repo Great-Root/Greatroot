@@ -37,40 +37,73 @@
 							<table class="for">
 							
 							<tr>
-								<td colspan="3"><input type="text" maxlength="14" id="account" name="account" value="${user.account}" ${user == null ? "" : "readonly" }  placeholder="ID(숫자와 영어로 4-14자)" style="margin: 0;"/></td>
-								<td width="10%"><input type="button" id="idCheck" value="중복검사" class="for"/></td>
+								<td>
+									<c:if test="${user != null}">
+									아이디
+									<h2>${user.account}</h2>
+									<input type="hidden" maxlength="14" id="account" value="${login.account}"/>
+									</c:if>
+									<c:if test="${user == null}">
+										<input type="text" maxlength="14" id="account" name="account" placeholder="ID(숫자와 영어로 4-14자)" />
+									</c:if>
+								</td>
 							</tr>
 							<tr>
-								<td colspan="4" height="30"><span id="result" style="margin: 0;"></span></td>
+								<td>
+									<c:if test="${user == null}">
+										<a class="button primary" id="idCheck" style="margin: -7px 0 0 0;">중복검사</a>
+									</c:if>
+									<span id="idResult" ></span>
+								</td>
 							</tr>
 							<tr>
-								<td colspan="3"><input type="text" id="nickname" name="nickname" value="${user.nickname}" maxlength="12" placeholder="닉네임" style="margin: 0;"/></td>
-								<td><input type="button" id="nickCheck" value="중복검사" class="for"/></td>
+								<td>
+									<c:if test="${user != null}">
+									닉네임 <input type="hidden" id="preNick" value="${user.nickname}"/>
+									</c:if>
+									<input type="text" id="nickname" name="nickname" value="${user.nickname}" maxlength="12" placeholder="닉네임" style="margin: 15px 0 0 0;"/>
+								</td>
 							</tr>
 							<tr>
-								<td colspan="4" height="30"><span id="result2" style="margin: 0;"></span></td>
+								<td>
+									<a class="button primary" id="nickCheck"  style="margin: 6px 0 0 0;">중복검사</a>
+									<span id="nickResult"></span>
+								</td>
 							</tr>
 							
 							<tr>
-								<td colspan="4"><input type="password" id="password" name="password" maxlength="16" placeholder="비밀번호" style="margin: 0;"/>
-								<input type="password" id="password_check" name="passwordcheck" maxlength="16" placeholder="비밀번호 확인" style="margin: 5px 0 0 0;"/></td>
+								<td >
+									<c:if test="${user != null}">
+										<input type="password" id="prePassword" name="prePassword" maxlength="16" placeholder="기존 비밀번호" style="margin: 15px 0 0 0;"/>
+									</c:if>
+									<input type="password" id="password" name="password" maxlength="16" placeholder="비밀번호" style="margin: 15px 0 0 0;"/>
+									<input type="password" id="password_check" name="passwordcheck" maxlength="16" placeholder="비밀번호 확인" style="margin: 5px 0 0 0;"/>
+								</td>
 							</tr>
 							<tr>
-								<td colspan="4" height="30"><span id="result3" style="margin: 0;"></span></td>
+								<td height="30"><span id="pwResult"></span></td>
 							</tr>
 							<tr>
-								<td colspan="3"><input type="text" id="email" name="email" value="${user.email}" ${user == null ? "" : "readonly" } maxlength="50"  placeholder="이메일" style="margin: 0;"/></td>
-								<td><input type="button" id="mailCheck" value="메일인증" class="for"/></td>
+								<td>
+									<input type="text" id="email" name="email" value="${user.email}" ${user == null ? "" : "readonly" } maxlength="50"  placeholder="이메일"/>
+								</td>
 							</tr>
 							<tr>
-								<td colspan="4" height="30"><span id="result4" style="margin: 0;"></span></td>
+								<td height="60"><a class="button primary" id="mailCheck" >메일인증</a><span id="mailResult"></span></td>
 							</tr>
 							
 							<tr>
-								<td colspan="4">생년월일<input type="date" id="birthday" name="birthday" value="${user.birthday}" placeholder="생일" style="margin-left: 50px"/></td>
+								<td>생년월일<input type="date" id="birthday" name="birthday" value="${user.birthday}" placeholder="생일" style="margin-left: 50px"/></td>
 							</tr>
 							<tr>
-								<td colspan="4"><input type="button" id="signup-btn" value="회원가입" class="primary" style="margin-top: 15px;"/></td>
+								<td>
+									<c:if test="${user == null}">
+										<input type="button" id="signup-btn" value="회원가입" class="primary" style="margin-top: 15px;"/>
+									</c:if>
+									<c:if test="${user != null}">
+										<input type="button" id="modify-btn" value="회원정보 변경완료" class="primary" style="margin-top: 15px;"/>
+									</c:if>
+								</td>
 							</tr>
 							</table>
 							</div>

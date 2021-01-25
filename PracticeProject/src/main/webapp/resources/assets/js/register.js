@@ -4,29 +4,28 @@
 	const getPwCheck= RegExp(/([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/);
 	const getNickName= RegExp(/^[a-zA-Z0-9]{0,12}$/);
 	const getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
-	let chk1 = false, chk2 = false, chk3 = false, chk4 = false, idchk = false;
+	
+	let idOverlapChk = false, pwChk = false, pwChkChk = false, nickChk = false, idchk = false, nickOverlapChk = false, modiChk = false;
 	
 	//ID 입력값 검증
 	$("#account").on('keyup', function() {
 		
 		if($("#account").val() === "") {
 			$("#account").css("background-color", "pink");
-			$("#result").html('<b style="font-size:14px; color:red;">&nbsp&nbsp아이디는 필수 정보에요!</b>');
-			chk1 = false;
+			$("#idResult").html('<b style="font-size:14px; color:red;">&nbsp&nbsp아이디는 필수 정보에요!</b>');
 			idchk = false;
 		}
 		//아이디 유효성 검사
 		else if(!getIdCheck.test($("#account").val())) {
 			$("#account").css("background-color", "pink");
-			$("#result").html('<b style="font-size:14px; color:red;">&nbsp&nbsp아이디는 영문자 또는 숫자를 사용해서 4-14자로 작성해주세요!</b>');
-			chk1 = false;
+			$("#idResult").html('<b style="font-size:14px; color:red;">&nbsp&nbsp아이디는 영문자 또는 숫자를 사용해서 4-14자로 작성해주세요!</b>');
 			idchk = false;
 		}else{
 			$("#account").css("background-color", "white");
-			$("#result").html('<b style="font-size:14px; color:red;">&nbsp&nbsp아이디 중복검사를 해주세요!</b>');
+			$("#idResult").html('<b style="font-size:14px; color:red;">&nbsp&nbsp아이디 중복검사를 해주세요!</b>');
 			idchk = true;
 		}
-			
+		idOverlapChk = false;
 
 	});
 	
@@ -46,12 +45,12 @@
 				success: function(result) { 
 					if(result === "OK") {
 						$("#account").css("background-color", "#D9E5FF");
-						$("#result").html('<b style="font-size:14px; color:green;">&nbsp&nbsp아이디 사용이 가능합니다!</b>');
-						chk1 = true;
+						$("#idResult").html('<b style="font-size:14px; color:green;">&nbsp&nbsp아이디 사용이 가능합니다!</b>');
+						idOverlapChk = true;
 					} else if(result === "NO"){
 						$("#account").css("background-color", "pink");
-						$("#result").html('<b style="font-size:14px; color:red;">&nbsp&nbsp해당 아이디가 이미 사용중입니다.</b>');
-						chk1 = false;
+						$("#idResult").html('<b style="font-size:14px; color:red;">&nbsp&nbsp해당 아이디가 이미 사용중입니다.</b>');
+						idOverlapChk = false;
 						idchk = false;
 					}
 				},
@@ -61,90 +60,153 @@
 			}); 		
 		}else{
 			$("#account").css("background-color", "pink");
-			$("#result").html('<b style="font-size:14px; color:red;">&nbsp&nbsp아이디를 다시 확인해주세요</b>');
-			chk1 = false;
+			$("#idResult").html('<b style="font-size:14px; color:red;">&nbsp&nbsp아이디를 다시 확인해주세요</b>');
+			idOverlapChk = false;
 		}
 	});
-	
+	$('#prePassword').on('keyup', function() {
+		pwChkChk = false;
+		modiChk = false;
+		pwChkChk = false;
+		if($('#password_check').val() != ""){
+			$('#password_check').val("");
+	        $('#password_check').css("background-color", "pink");
+	        $('#password_check').attr("placeholder","비밀번호 확인(다시 작성해주세요!)");
+	        $('#pwResult').html('<b style="font-size:14px; color:red;">&nbsp&nbsp비밀번호를 다시 입력해주세요</b>');
+		}
+		
+	});
+
 	
 	//비밀번호 입력값 검증.
 	$('#password').on('keyup', function() {
+		pwChkChk = false;
+		modiChk = false;
+		pwChk = false;
 		//password 재입력시 비밀번호 확인란 초기화
 		if($('#password_check').val() != ""){
 			$('#password_check').val("");
 	        $('#password_check').css("background-color", "pink");
 	        $('#password_check').attr("placeholder","비밀번호 확인(다시 작성해주세요!)");
-		    chk2 = false;
+		    pwChk = false;
 		}
 		//비밀번호란 공백 확인
 		if($('#password').val() === "") {
 			$('#password').css("background-color", "pink");
-			$('#result3').html('<b style="font-size:14px; color:red;">&nbsp&nbsp비밀번호는 필수 정보입니다!</b>');
-			chk2 = false;
+			$('#pwResult').html('<b style="font-size:14px; color:red;">&nbsp&nbsp비밀번호는 필수 정보입니다!</b>');
+			pwChk = false;
 		}
 		//비밀번호 유효성 검사.
 		else if(!getPwCheck.test($('#password').val()) || $('#password').val().length < 8) {
 			$('#password').css("background-color", "pink");
-			$('#result3').html('<b style="font-size:14px; color:red;">&nbsp&nbsp비밀번호는 특수문자 포함하여 8자 이상 입력해 주세요!</b>');
-			chk2 = false;
+			$('#pwResult').html('<b style="font-size:14px; color:red;">&nbsp&nbsp비밀번호는 특수문자 포함하여 8자 이상 입력해 주세요!</b>');
+			pwChk = false;
 		} else {
 			$('#password').css("background-color", "#D9E5FF");
-			$('#result3').html('<b style="font-size:14px; color:red;">&nbsp&nbsp비밀번호 확인을 해주세요!</b>');
-			chk2 = true;
+			$('#pwResult').html('<b style="font-size:14px; color:red;">&nbsp&nbsp비밀번호 확인을 해주세요!</b>');
+			pwChk = true;
 		}
 		
 	}); 
 	
 	//비밀번호 확인란 입력값 검증.
 	$('#password_check').on('keyup', function() {
+		modiChk = false;
+		pwChkChk = false;
 		//비밀번호 확인란 공백 확인
-		if(!chk2){
+		if(!pwChk){
 			$('#password_check').css("background-color", "pink");
-			$('#result3').html('<b style="font-size:14px;color:red;">&nbsp&nbsp비밀번호를 먼저 작성해주세요</b>');
-			chk3 = false;
+			$('#pwResult').html('<b style="font-size:14px;color:red;">&nbsp&nbsp비밀번호를 먼저 작성해주세요</b>');
+			pwChkChk = false;
 		}
 		else if($("#password_check").val() === ""){
 		    $('#password_check').css("background-color", "pink");
-			$('#result3').html('<b style="font-size:14px;color:red;">&nbsp&nbsp비밀번호 확인란을 입력해주세요!</b>');
-			chk3 = false;
+			$('#pwResult').html('<b style="font-size:14px;color:red;">&nbsp&nbsp비밀번호 확인란을 입력해주세요!</b>');
+			pwChkChk = false;
 		}		         
 		//비밀번호 확인란 유효성검사
 		else if($("#password").val() != $("#password_check").val()){
 		    $('#password_check').css("background-color", "pink");
-			$('#result3').html('<b style="font-size:14px;color:red;">&nbsp&nbsp비밀번호 입력 정보가 다릅니다</b>');
-			chk3 = false;
+			$('#pwResult').html('<b style="font-size:14px;color:red;">&nbsp&nbsp비밀번호 입력 정보가 다릅니다</b>');
+			pwChkChk = false;
 		} else {
 			$('#password_check').css("background-color", "#D9E5FF");
-			$('#result3').html('<b style="font-size:14px;color:green;">&nbsp&nbsp비밀번호 확인이 완료됐습니다!</b>');
-			chk3 = true;
+			$('#pwResult').html('<b style="font-size:14px;color:green;">&nbsp&nbsp비밀번호 확인이 완료됐습니다!</b>');
+			pwChkChk = true;
+			const password = $('#prePassword').val();
+			
+			$.ajax({
+				type: "POST",
+				url: "/user/modifyChk",
+				headers: {
+					"Content-type" : "application/json"
+				},
+				dataType: "text",
+				data: password,
+				success: function(result) {
+					if(result === "success") {
+						modiChk = true;
+					} else {
+						modiChk = false;
+					}
+				},
+				error: function() {
+					console.log("통신 실패!");
+				}
+			});
 		}
 		
 	});
 	
 	//닉네임 값 검증
 	$('#nickname').on('keyup', function() {
+		const preNick = $('#preNick').val();
+		$('#nickCheck').removeClass('disabled');
+		nickOverlapChk = false;
+		nickChk = false;
 		//닉네임 값 공백 확인
 		if($("#nickname").val() === ""){
 		    $('#nickname').css("background-color", "pink");
-			$('#result2').html('<b style="font-size:14px;color:red;">&nbsp&nbsp닉네임은 필수정보 입니다!</b>');
-			chk4 = false;
+			$('#nickResult').html('<b style="font-size:14px;color:red;">&nbsp&nbsp닉네임은 필수정보 입니다!</b>');
+			nickChk = false;
 		}		         
 		//닉네임 값 유효성검사
 		else if(!getNickName.test($("#nickname").val())){
 		    $('#nickname').css("background-color", "pink");
-			$('#result2').html('<b style="font-size:14px;color:red;">&nbsp&nbsp닉네임은 영어와 숫자로 최대 12글자로 작성해주세요</b>');
-			chk4 = false;
-		} else {
+			$('#nickResult').html('<b style="font-size:14px;color:red;">&nbsp&nbsp닉네임은 영어와 숫자로 최대 12글자로 작성해주세요</b>');
+			nickChk = false;
+		} 
+		//회원 정보 수정시 기존의 닉네임 사용
+		else if($('#nickname').val() != null && preNick === $('#nickname').val()){
+		    $('#nickname').css("background-color", "#D9E5FF");
+		    $('#nickCheck').addClass('disabled');
+			$('#nickResult').html('<b style="font-size:14px;color:green;">&nbsp&nbsp기존의 닉네임 입니다. 사용가능 합니다.</b>');
+			nickChk = true;
+			nickOverlapChk = true;
+		}else {
 			$('#nickname').css("background-color", "white");
-			$('#result2').html('<b style="font-size:14px;color:red;">&nbsp&nbsp닉네임 중복검사를 해주세요!</b>');
-			chk4 = true;
+			$('#nickResult').html('<b style="font-size:14px;color:red;">&nbsp&nbsp닉네임 중복검사를 해주세요!</b>');
+			nickChk = true;
 		}
 		
 	});
 	
 	//닉네임 중복검사
 	$("#nickCheck").click(function() {
-		if(chk4){
+		const preNick = $('#preNick').val();
+		if($("#nickname").val() === ""){
+		    $('#nickname').css("background-color", "pink");
+			$('#nickResult').html('<b style="font-size:14px;color:red;">&nbsp&nbsp닉네임은 필수정보 입니다!</b>');
+			nickChk = false;
+		}
+		else if(preNick === $('#nickname').val()){
+		    $('#nickname').css("background-color", "#D9E5FF");
+		    $('#nickCheck').addClass('disabled');
+			$('#nickResult').html('<b style="font-size:14px;color:green;">&nbsp&nbsp기존의 닉네임 입니다. 사용가능 합니다.</b>');
+			nickChk = true;
+			nickOverlapChk = true;
+		}
+		else if(nickChk){
 			const nickname = $('#nickname').val();
 			
 			$.ajax({
@@ -158,12 +220,12 @@
 				success: function(result) {
 					if(result === "OK") {
 						$("#nickname").css("background-color", "#D9E5FF");
-						$("#result2").html('<b style="font-size:14px; color:green;">&nbsp&nbsp닉네임 사용이 가능합니다!</b>');
-						chk3 = true;
+						$("#nickResult").html('<b style="font-size:14px; color:green;">&nbsp&nbsp닉네임 사용이 가능합니다!</b>');
+						nickOverlapChk = true;
 					} else if(result === "NO"){
 						$("#nickname").css("background-color", "pink");
-						$("#result2").html('<b style="font-size:14px; color:red;">&nbsp&nbsp해당 닉네임이 이미 사용중입니다.</b>');
-						chk3 = false;
+						$("#nickResult").html('<b style="font-size:14px; color:red;">&nbsp&nbsp해당 닉네임이 이미 사용중입니다.</b>');
+						nickOverlapChk = false;
 					}
 				},
 				error: function() {
@@ -172,13 +234,13 @@
 			}); 		
 		}else{
 			$("#nickname").css("background-color", "pink");
-			$("#result2").html('<b style="font-size:14px; color:red;">&nbsp&nbsp닉네임을 다시 확인해주세요</b>');
+			$("#nickResult").html('<b style="font-size:14px; color:red;">&nbsp&nbsp닉네임을 다시 확인해주세요</b>');
 		}
 });
 	
 	//사용자가 회원가입 버튼을 눌렀을 때 이벤트 처리
 	$('#signup-btn').click(function() {
-		if(chk1 && chk2 && chk3 && chk4) {
+		if(idOverlapChk && idchk && pwChk && pwChkChk && nickChk && nickOverlapChk) {
 			const id = $('#account').val();
 			const pw = $('#password').val();
 			const name = $('#nickname').val();
@@ -216,6 +278,65 @@
 			});
 			
 		} else {
+			alert('입력 정보를 다시 확인하세요!');
+		}
+		
+	}); 
+	
+	
+	//회원 정보 수정 완료 버튼이 눌렸을 때
+	$('#modify-btn').click(function() {
+
+		if(pwChk && pwChkChk && nickChk && nickOverlapChk && modiChk) {
+			const id = $('#account').val();
+			const pw = $('#password').val();
+			const name = $('#nickname').val();
+			const email = $('#email').val();
+			const birthday = $('#birthday').val();
+			
+			const user = {
+				account: id,
+				password: pw,
+				nickname: name,
+				email: email,
+				birthday: birthday
+			};
+			
+			$.ajax({
+				type: "POST",
+				url: "/user/modifyUserInfo",
+				headers: {
+					"Content-type" : "application/json"
+				},
+				dataType: "text",
+				data: JSON.stringify(user),
+				success: function(result) {
+					if(result === "modifySuccess") {
+						alert("회원정보를 변경했습니다! 다시 로그인 해주세요");
+						location.href="/user/logout";
+					} else {
+						alert("회원정보를 변경하지 못했습니다. 입력정보를 다시한번 확인해 주세요.");
+					}
+				},
+				error: function() {
+					console.log("통신 실패!");
+				}
+			
+			});
+			
+		} else {
+			pwChkChk = false;
+			modiChk = false;
+			pwChkChk = false;
+			$('#password').val("");
+			$('#prePassword').val("");
+			$('#password_check').val("");
+	        $('#password_check').css("background-color", "pink");
+	        $('#password_check').attr("placeholder","비밀번호 확인(다시 작성해주세요!)");
+	        $('#password').css("background-color", "pink");
+	        $('#password').attr("placeholder","비밀번호 (다시 작성해주세요!)");
+	        $('#prePassword').attr("placeholder","기존 비밀번호 (다시 작성해주세요!)");
+	        $('#pwResult').html('<b style="font-size:14px;color:red;">&nbsp&nbsp비밀번호를 다시 작성해주세요</b>');
 			alert('입력 정보를 다시 확인하세요!');
 		}
 		

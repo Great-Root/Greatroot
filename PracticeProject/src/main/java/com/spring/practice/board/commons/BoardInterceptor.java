@@ -1,4 +1,4 @@
-package com.spring.practice.user.commons;
+package com.spring.practice.board.commons;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

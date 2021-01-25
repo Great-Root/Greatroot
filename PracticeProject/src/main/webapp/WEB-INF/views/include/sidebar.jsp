@@ -26,6 +26,7 @@
 		<div class="row gtr-uniform">
 		<p><label style="font-size: 20px;">${login.account}님 환영합니다!</label>
 		<a href="/user/logout" class="button primary" >로그아웃</a>
+		<a href="/user/modifyUserInfo" class="button primary" style="padding: 0 20px 0 20px;">회원정보변경</a>
 		</p>
 		</div>
 		</c:if>
