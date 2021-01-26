@@ -84,7 +84,10 @@ public class UserController {
 	//회원가입
 	@GetMapping("/register")
 	public ModelAndView register() {
-		return new ModelAndView("/user/register");
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageName", "회원가입");
+		mv.setViewName("user/register");
+		return mv;
 	}
 	
 	@PostMapping("/register")
@@ -101,6 +104,7 @@ public class UserController {
 		if(vo != null) {
 			mv.setViewName("user/register");
 			mv.addObject("user", service.getOneUserInfo(vo.getAccount()));
+			mv.addObject("pageName", "회원정보 변경");
 		}else {
 			mv.setViewName("redirect:/");
 		}

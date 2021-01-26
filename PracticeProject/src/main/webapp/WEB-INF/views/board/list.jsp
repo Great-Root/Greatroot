@@ -46,9 +46,9 @@
 
 				<!-- Search -->
 			
-				<form method="get" action="<c:url value='/board/list'/>">
-					<div class="table-wrapper">
-						<table class="search">
+				<form method="get" action="<c:url value='/board/list'/>" style="margin-bottom: 0;">
+					<div class="table-wrapper" >
+						<table class="search" style="margin-bottom: 0;">
 							<tr>
 								<td width="200"><select id="condition" name="condition">
 	
@@ -71,31 +71,16 @@
 			
 
 				<!-- Table -->
-				<div class="table-wrapper">
+				<div class="table-wrapper" style="margin-top: 0;">
 					<table>
-						<thead>
-							<tr>
-								<th width="80">글번호</th>
-								<th width="500">제목</th>
-								<th width="300">작성자</th>
-								<th width="150">작성날짜</th>
-								<th width="80">조회수</th>
-								<th width="80">좋아요</th>
-								<th width="80">싫어요</th>
-							</tr>
-						</thead>
 						<tbody>
 							<c:forEach var="post" items="${boardList}">
 								<tr>
 									<td>${post.postNo}</td>
 									<td>
-									<a href="<c:url value='/board/postView/${post.postNo}${pc.makeURI(pc.paging.page)}'/>">${post.title}</a>
+									<a href="<c:url value='/board/postView/${post.postNo}${pc.makeURI(pc.paging.page)}'/>" >${post.title}</a>
+									<br>${post.writer} &nbsp;&bull;&nbsp; ${post.regDate} &nbsp;&bull;&nbsp; 조회수 ${post.views}회 &nbsp;&nbsp;&nbsp; <i class="icon for fa-thumbs-up"></i>&nbsp; ${post.likes} &nbsp;&nbsp;&nbsp; <i class="icon for fa-thumbs-down"></i>&nbsp;${post.dislikes}
 									</td>
-									<td>${post.writer}</td>
-									<td>${post.regDate}</td>
-									<td>${post.views}</td>
-									<td>${post.likes}</td>
-									<td>${post.dislikes}</td>
 								</tr>
 							</c:forEach>
 						</tbody>

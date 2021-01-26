@@ -9,7 +9,7 @@
 -->
 <html>
 <head>
-<title>회원가입 페이지</title>
+<title>${pageName} 페이지</title>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -32,7 +32,7 @@
 				<form action="/user/register" method="post">
 					<div class="row gtr-uniform">
 						<div class="col-12 col-12-xlarge">
-							<h3>회원가입</h3>
+							<h3>${pageName}</h3>
 							<div class="table-wrapper">
 							<table class="for">
 							
@@ -89,7 +89,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td height="60"><a class="button primary" id="mailCheck" >메일인증</a><span id="mailResult"></span></td>
+								<td height="60"><!-- <a class="button primary" id="mailCheck" >메일인증</a><span id="mailResult"></span> --></td>
 							</tr>
 							
 							<tr>
