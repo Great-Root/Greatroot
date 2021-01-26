@@ -18,7 +18,7 @@
 	<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
 <style>
 div.write {
-	width: 80%;
+	width: 100%;
 	margin-top: 10px;
 }
 </style>
@@ -40,8 +40,8 @@ div.write {
 						<div class="write">
 						
 							<input type="text" name="writer" value="${login.account}" readonly />
-							<input type="text" name="title" value="${post.title}" placeholder="제목을 작성해주세요~" />
-							<textarea name="content" rows="10" placeholder="내용을 입력해 주세요~">${post.content}</textarea><br>
+							<input type="text" name="title" value="${post.title}" maxlength="80" placeholder="제목을 작성해주세요~" />
+							<textarea name="content" rows="10" placeholder="내용을 입력해 주세요~" maxlength="800">${post.content}</textarea><br>
 							
 						</div>
 					</div>

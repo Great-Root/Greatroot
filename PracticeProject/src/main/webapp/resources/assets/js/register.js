@@ -136,13 +136,13 @@
 			const password = $('#prePassword').val();
 			
 			$.ajax({
-				type: "POST",
-				url: "/user/modifyChk",
+				type: "POST",	
+				url: "/user/modifyChk",	
 				headers: {
-					"Content-type" : "application/json"
+					"Content-type" : "application/json"	
 				},
-				dataType: "text",
-				data: password,
+				dataType: "text",	
+				data: password,		
 				success: function(result) {
 					if(result === "success") {
 						modiChk = true;

@@ -16,6 +16,7 @@
 <link rel="stylesheet"
 	href="<c:url value='/resources/assets/css/main.css'/>" />
 	<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+  
 </head>
 <body class="is-preload">
 
@@ -41,9 +42,11 @@
 							</tr>
 							<tr>
 								<td colspan="2">
-									<div class="box">
-										<p>${post.content}</p>
-									</div>
+								<div class="box">
+									<pre style="font-family:Noto Sans KR; font-size: 20px; word-wrap: break-word;white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-break:break-all;">${post.content}</pre>
+								</div>
+									
+
 									<ul class="icons" style="text-align: center; font-size: 35px; margin-bottom: 15px;">
 										<li><a href="#" class="icon for fa-thumbs-up"></a>${post.likes}</li>
 										<li><a href="#" class="icon for fa-thumbs-down"></a>${post.dislikes}</li>
