@@ -101,7 +101,8 @@
 										<input type="button" id="signup-btn" value="회원가입" class="primary" style="margin-top: 15px;"/>
 									</c:if>
 									<c:if test="${user != null}">
-										<input type="button" id="modify-btn" value="회원정보 변경완료" class="primary" style="margin-top: 15px;"/>
+										<a class="button primary" id="modify-btn" style="margin-top: 15px;">회원정보 변경완료</a>
+										<a class="button primary" id="delete-btn" style="margin: 15px 0 0 1em;" onclick="return confirm('정말 회원탈퇴를 진행 하시겠습니까?\n회원정보는 3개월간 보관된 뒤 삭제되며 그 기간 동안은 해당 아이디로 재가입이 불가능합니다.')">회원 탈퇴</a>
 									</c:if>
 								</td>
 							</tr>

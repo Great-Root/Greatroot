@@ -1,6 +1,6 @@
 package com.spring.practice.user.service;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,11 +42,15 @@ public class UserService implements IUserService {
 
 	@Override
 	public void deleteAccount(String account) {
-		mapper.deleteAccount(account);
+		Date delDate = new Date(System.currentTimeMillis() + (1000L * 60 * 60 * 24 * 90));
+		Map<String,Object> delInfo = new HashMap<>();
+		delInfo.put("account", account);
+		delInfo.put("delDate", delDate);
+		mapper.deleteAccount(delInfo);
 	}
 
 	@Override
-	public UserVO getOneUserInfo(String account) {
+	public UserVO getOneUserInfo(String account) {  
 		return mapper.getOneUserInfo(account);
 	}
 
@@ -67,7 +71,11 @@ public class UserService implements IUserService {
 
 	@Override
 	public UserVO getUserWithSessionId(String sessionId) {
-		return mapper.getUserWithSessionId(sessionId);
+		UserVO user = mapper.getUserWithSessionId(sessionId);
+		if(user == null || user.getLimitTime().getTime() < System.currentTimeMillis()) {
+			user = null;
+		}
+		return user;
 	}
 
 }

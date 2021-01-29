@@ -342,5 +342,42 @@
 		
 	}); 
 	
+	//회원탈퇴 버튼이 눌렸을 때
+	$('#delete-btn').click(function() {
+		const id = $('#account').val();
+		const pw = $('#prePassword').val();
+
+		const delInfo = {
+			account : id,
+			password : pw
+		};
+
+		$.ajax({
+			type : "POST",
+			url : "/user/deleteUserInfo",
+			headers : {
+				"Content-type" : "application/json"
+			},
+			dataType : "text",
+			data : JSON.stringify(delInfo),
+			success : function(result) {
+				if (result === "deleteSuccess") {
+					alert("회원 탈퇴 되었습니다. 다음에 또 만나요~");
+					location.href="/user/logout";
+				} else {
+					alert("회원 탈퇴가 안됐습니다. 비밀번호를 다시 확인해주세요!");
+					$('#prePassword').val("");
+			        $('#prePassword').css("background-color", "pink");
+			        $('#prePassword').attr("placeholder","기존 비밀번호 (다시 작성해주세요!)");
+				}
+			},
+			error : function() {
+				console.log("통신 실패!");
+			}
+
+		});
+
+	}); 
+	
 	
 })(jQuery);

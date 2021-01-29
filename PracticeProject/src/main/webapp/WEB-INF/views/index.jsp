@@ -43,7 +43,7 @@
 						Set이나 Map을 이용해 중복 클릭이 안되겠끔 만들어볼 생각입니다.<br>
 						빠른 시일 내에 구현해 볼게요~ 조금만 기다려 주세용~ ㅎㅎ</p>
 						<ul class="actions">
-							<li><a href="#" class="button big">Learn More</a></li>
+							<li><a href="<c:url value='/board/list'/>" ${login == null ? "onclick=\"return confirm('로그인을 먼저 해주세요~')\"" : "" } class="button big">게시판으로 가기~</a></li>
 						</ul>
 					</div>
 					<span class="image object"> <img src="<c:url value='resources/images/pic01.jpg' />" alt="" />

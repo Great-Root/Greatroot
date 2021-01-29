@@ -15,6 +15,7 @@ public class UserVO {
 	private Timestamp limitTime;
 	private boolean autoLogin;
 	private int authority;
+	private Date delDate;
 	
 	public String getAccount() {
 		return account;
@@ -76,5 +77,13 @@ public class UserVO {
 	public void setAuthority(int authority) {
 		this.authority = authority;
 	}
+	public Date getDelDate() {
+		return delDate;
+	}
+	public void setDelDate(Date delDate) {
+		this.delDate = delDate;
+	}
+	
+	
 	
 }

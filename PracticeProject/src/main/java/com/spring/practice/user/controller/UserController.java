@@ -1,6 +1,7 @@
 package com.spring.practice.user.controller;
 
-import java.util.Date;
+
+import java.sql.Date;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +33,7 @@ public class UserController {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();		
 		UserVO dbData = service.getOneUserInfo(inputData.getAccount());
 
-		if (dbData != null && encoder.matches(inputData.getPassword(), dbData.getPassword())) {
+		if (dbData.getDelDate() == null && dbData != null && encoder.matches(inputData.getPassword(), dbData.getPassword())) {
 			session.setAttribute("login", dbData);
 			// AutoLogin
 			if (inputData.isAutoLogin()) {
@@ -42,7 +42,7 @@ public class UserController {
 				loginCookie.setPath("/");
 				loginCookie.setMaxAge((int) limitTime);
 				response.addCookie(loginCookie);
-				long expiredDate = System.currentTimeMillis() + (limitTime * 1000);
+				long expiredDate = System.currentTimeMillis() + (limitTime * 1000L);
 				Date limitDate = new Date(expiredDate);
 				service.keepLogin(session.getId(), limitDate, inputData.getAccount());
 			}
@@ -54,15 +54,15 @@ public class UserController {
 	
 	@GetMapping("/logout")
 	public ModelAndView logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-		UserVO vo = (UserVO) session.getAttribute("login");
-		if(vo != null) {
+		UserVO loginData = (UserVO) session.getAttribute("login");
+		if(loginData != null) {
 			session.removeAttribute("login");
 			session.invalidate();
 			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
 			if(loginCookie != null) {
 				loginCookie.setMaxAge(0);
 				response.addCookie(loginCookie);
-				service.keepLogin("none", new Date(), vo.getAccount());
+				service.keepLogin("none", new Date(System.currentTimeMillis()), loginData.getAccount());
 			}
 		}
 		
@@ -99,11 +99,11 @@ public class UserController {
 	//회원정보변경
 	@GetMapping("/modifyUserInfo")
 	public ModelAndView modifyUserInfo(HttpSession session) {
-		UserVO vo = (UserVO) session.getAttribute("login");
+		UserVO loginData = (UserVO) session.getAttribute("login");
 		ModelAndView mv = new ModelAndView();
-		if(vo != null) {
+		if(loginData != null) {
 			mv.setViewName("user/register");
-			mv.addObject("user", service.getOneUserInfo(vo.getAccount()));
+			mv.addObject("user", service.getOneUserInfo(loginData.getAccount()));
 			mv.addObject("pageName", "회원정보 변경");
 		}else {
 			mv.setViewName("redirect:/");
@@ -119,9 +119,25 @@ public class UserController {
 	
 	@PostMapping("/modifyChk")
 	public String modifyChk(@RequestBody String pw, HttpSession session) {
-		UserVO dbData = (UserVO) session.getAttribute("login");
+		UserVO loginData = (UserVO) session.getAttribute("login");
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		String result = encoder.matches(pw, dbData.getPassword()) ? "success" : "fail";
+		String result = encoder.matches(pw, loginData.getPassword()) ? "success" : "fail";
+		return result;
+	}
+	
+	//회원 탈퇴 기능
+	@PostMapping("/deleteUserInfo")
+	public String deleteUserInfo(@RequestBody UserVO delInfo,HttpSession session) {
+		UserVO loginData = (UserVO) session.getAttribute("login");
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String result;
+		if(loginData.getAccount().equals(delInfo.getAccount()) && encoder.matches(delInfo.getPassword(), loginData.getPassword())) {
+			service.deleteAccount(delInfo.getAccount());
+			result = "deleteSuccess";
+		}else {
+			result = "deleteFail";
+		}
+			
 		return result;
 	}
 	

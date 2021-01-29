@@ -1,6 +1,6 @@
 package com.spring.practice.user.service;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import com.spring.practice.user.model.UserVO;

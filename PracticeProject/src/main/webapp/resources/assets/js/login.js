@@ -43,4 +43,6 @@
 			$('#sign_result').html('<b style="font-size:14px; color:red;">입력정보를 확인해주세요</b>');
 		}	
 	});
+	
+
 })(jQuery);

@@ -21,7 +21,7 @@ public interface IUserMapper {
 	void updateAccount(UserVO user);
 	
 	//회원 탈퇴 기능
-	void deleteAccount(String account);
+	void deleteAccount(Map<String, Object> delInfo);
 	
 	//회원 정보 조회 기능
 	UserVO getOneUserInfo(String account);

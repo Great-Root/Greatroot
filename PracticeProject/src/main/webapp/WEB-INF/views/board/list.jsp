@@ -79,7 +79,7 @@
 									<td>${post.postNo}</td>
 									<td>
 									<a href="<c:url value='/board/postView/${post.postNo}${pc.makeURI(pc.paging.page)}'/>" >${post.title}</a>
-									<br>${post.writer} &nbsp;&bull;&nbsp; ${post.regDate} &nbsp;&bull;&nbsp; 조회수 ${post.views}회 &nbsp;&nbsp;&nbsp; <i class="icon for fa-thumbs-up"></i>&nbsp; ${post.likes} &nbsp;&nbsp;&nbsp; <i class="icon for fa-thumbs-down"></i>&nbsp;${post.dislikes}
+									<span style="font-size: 0.7em;"><br>${post.writer} &nbsp;&bull;&nbsp; ${post.regDate} &nbsp;&bull;&nbsp; 조회수 ${post.views}회 &nbsp;&nbsp;&nbsp; <i class="icon for fa-thumbs-up"></i>&nbsp; ${post.likes} &nbsp;&nbsp;&nbsp; <i class="icon for fa-thumbs-down"></i>&nbsp;${post.dislikes}</span>
 									</td>
 								</tr>
 							</c:forEach>
@@ -88,7 +88,7 @@
 					<ul class="pagination">
 						<li><a href="<c:url value='/board/list${pc.makeURI(pc.beginPage-1)}' />" class="button${pc.prev ? '':' disabled'}">이전</a></li>
 						<c:forEach var="pageNum" begin="${pc.beginPage}" end="${pc.endPage}">
-							<li><a href="<c:url value='/board/list${pc.makeURI(pageNum)}'/>" class="page ${(pc.paging.page == pageNum) ? 'active' : ''}">${pageNum}</a></li>
+							<li><a href="<c:url value='/board/list${pc.makeURI(pageNum)}'/>" class="page${(pc.paging.page == pageNum) ? ' active' : ''}">${pageNum}</a></li>
 						</c:forEach>
 						<li><a href="<c:url value='/board/list${pc.makeURI(pc.endPage+1)}' />" class="button${pc.next ? '':' disabled'}">다음</a></li>
 					</ul>
