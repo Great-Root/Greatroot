@@ -48,20 +48,20 @@ public class PostVO {
 		return writer;
 	}
 	public void setWriter(String writer) {
-		this.writer = writer;
+		this.writer = writer.replaceAll("<%|%>|<!--|-->", "♡");
 	}
 
 	public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
-		this.title = title;
+		this.title = title.replaceAll("<%|%>|<!--|-->", "♡");
 	}
 	public String getContent() {
 		return content;
 	}
 	public void setContent(String content) {
-		this.content = content;
+		this.content = content.replaceAll("<%|%>|<!--|-->", "♡");
 	}
 	@Override
 	public String toString() {

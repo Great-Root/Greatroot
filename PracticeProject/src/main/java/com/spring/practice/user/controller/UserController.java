@@ -33,7 +33,7 @@ public class UserController {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();		
 		UserVO dbData = service.getOneUserInfo(inputData.getAccount());
 
-		if (dbData.getDelDate() == null && dbData != null && encoder.matches(inputData.getPassword(), dbData.getPassword())) {
+		if (dbData != null && encoder.matches(inputData.getPassword(), dbData.getPassword()) && dbData.getDelDate() == null) {
 			session.setAttribute("login", dbData);
 			// AutoLogin
 			if (inputData.isAutoLogin()) {

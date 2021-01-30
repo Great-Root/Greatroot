@@ -21,13 +21,13 @@ public class UserVO {
 		return account;
 	}
 	public void setAccount(String account) {
-		this.account = account;
+		this.account = account.replaceAll("<%|%>|<!--|-->", "♡");
 	}
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = password.replaceAll("<%|%>|<!--|-->", "♡");
 	}
 	public String getNickname() {
 		return nickname;
@@ -45,7 +45,7 @@ public class UserVO {
 		return email;
 	}
 	public void setEmail(String email) {
-		this.email = email;
+		this.email = email.replaceAll("<%|%>|<!--|-->", "♡");
 	}
 	public Timestamp getRegDate() {
 		return regDate;

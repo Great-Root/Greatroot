@@ -10,7 +10,7 @@
 		<h3>로그인</h3><label id="sign_result"></label>
 			<div class="row gtr-uniform">
 				<div class="col-12">
-					<input type="text" maxlength="14" id="sign_account" name="sign_account" placeholder="ID" />
+					<input type="text" maxlength="14" id="sign_account" name="sign_account" placeholder="ID"/>
 					<input type="password" maxlength="16" id="sign_password" name="sign_password" placeholder="Password" />
 					<input type="button" id="signIn-btn" value="로그인" class="primary" />
 					<a href="<c:url value='/user/register' />" class="button primary" style="margin-left: 5px;">회원가입</a>
