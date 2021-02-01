@@ -35,7 +35,7 @@
 		</interceptor>
 		
 		<interceptor>
-			<mapping path="/board/*"/>	
+			<mapping path="/board/write"/>	
 			<beans:ref bean="boardInterceptor" />
 		</interceptor>
 		

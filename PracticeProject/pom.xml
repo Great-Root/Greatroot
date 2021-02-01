@@ -231,9 +231,9 @@
 					<version>1.1</version>
 					<configuration>
 						<url>http://15.165.84.95/manager/text</url>
-						<path>/ROOT</path>
-						<username>spring</username>
-						<password>spring</password>
+						<path>/</path>
+						<username>tomcat</username>
+						<password>spr!ng</password>
 					</configuration>
 				</plugin>
 			 

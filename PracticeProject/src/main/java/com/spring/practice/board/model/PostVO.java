@@ -6,6 +6,7 @@ public class PostVO {
 
 	private int postNo;
 	private Date regDate;
+	private String time;
 	private int views;
 	private int likes;
 	private int dislikes;
@@ -26,6 +27,12 @@ public class PostVO {
 		this.regDate = regDate;
 	}
 	
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
 	public int getViews() {
 		return views;
 	}

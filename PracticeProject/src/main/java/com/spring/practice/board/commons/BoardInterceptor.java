@@ -16,7 +16,7 @@ public class BoardInterceptor extends HandlerInterceptorAdapter {
 		
 		if(session.getAttribute("login") == null) {
 			
-			response.sendRedirect("/");
+			response.sendRedirect("/board/list");
 			return false;
 		} 
 		

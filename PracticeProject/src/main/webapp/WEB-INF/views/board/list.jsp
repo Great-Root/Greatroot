@@ -26,7 +26,7 @@
 		<div id="main">
 			<div class="inner">
 				<header id="header">
-				<span class="label"><a href="<c:url value='/board/write'/>" class="button primary">글 작성</a></span>
+				<span class="label"><a href="<c:url value='/board/write'/>" ${login == null ? "onclick=\"return confirm('로그인을 먼저 해주세요~')\"" : "" } class="button primary">글 작성</a></span>
 					
 					
 
@@ -79,7 +79,7 @@
 									<td>${post.postNo}</td>
 									<td>
 									<a href="<c:url value='/board/postView/${post.postNo}${pc.makeURI(pc.paging.page)}'/>" >${post.title}</a>
-									<span style="font-size: 0.7em;"><br>${post.writer} &nbsp;&bull;&nbsp; ${post.regDate} &nbsp;&bull;&nbsp; 조회수 ${post.views}회 &nbsp;&nbsp;&nbsp; <i class="icon for fa-thumbs-up"></i>&nbsp; ${post.likes} &nbsp;&nbsp;&nbsp; <i class="icon for fa-thumbs-down"></i>&nbsp;${post.dislikes}</span>
+									<span style="font-size: 0.7em;"><br>${post.writer} &nbsp;&bull;&nbsp; ${post.time} &nbsp;&bull;&nbsp; 조회수 ${post.views}회 &nbsp;&nbsp;&nbsp; <i class="icon for fa-thumbs-up"></i>&nbsp; ${post.likes} &nbsp;&nbsp;&nbsp; <i class="icon for fa-thumbs-down"></i>&nbsp;${post.dislikes}</span>
 									</td>
 								</tr>
 							</c:forEach>
