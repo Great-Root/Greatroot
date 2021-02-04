@@ -43,17 +43,25 @@
 							<tr>
 								<td colspan="2">
 								<div class="box">
-									<pre style="font-family:Noto Sans KR; font-size: 20px; word-wrap: break-word;white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-break:break-all;">${post.content}</pre>
+									<pre style="font-family:Noto Sans KR; font-size: 20px; word-wrap: break-word;white-space: pre-wrap;
+									white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-break:break-all;">${post.content}</pre>
 								</div>
 									
-
-									<ul class="icons" style="text-align: center; font-size: 35px; margin-bottom: 15px;">
-										<li><a href="#" class="icon for fa-thumbs-up"></a>${post.likes}</li>
-										<li><a href="#" class="icon for fa-thumbs-down"></a>${post.dislikes}</li>
-									</ul>
 									<form id="btnForm" action="" method="post">
+									<input type="hidden" id="account" value="${login.account}"/>
+									<ul class="icons" style="text-align: center; font-size: 35px; margin-bottom: 15px;">
+										<li>
+										<a href="#" id="likeBtn"class="icon" ><i id="likeIcon" class="${post.like ? 'fas' : 'far' } fa-thumbs-up"></i></a>
+										<span id="likes"><b class="icon"> ${post.likesNum}</b></span>
+										</li>
+										<li>
+										<a href="#" id="dislikeBtn"class="icon" ><i id="dislikeIcon" class="${post.dislike ? 'fas' : 'far' } fa-thumbs-down"></i></a>
+										<span id="dislikes"><b class="icon"> ${post.dislikesNum}</b></span>
+										</li>
+									</ul>
+									
 										<a href="<c:url value='/board/list?page=${search.page}&countPerPage=${search.countPerPage}&keyword=${search.keyword}&condition=${search.condition}'/>" class="button primary">목록</a>
-										<input type="hidden" name="postNo" value="${post.postNo}" />
+										<input type="hidden" id="postNo" name="postNo" value="${post.postNo}" />
 										<input type="hidden" name="page" value="${search.page}" />
 										<input type="hidden" name="countPerPage" value="${search.countPerPage}" />
 										<input type="hidden" name="keyword" value="${search.keyword}" />

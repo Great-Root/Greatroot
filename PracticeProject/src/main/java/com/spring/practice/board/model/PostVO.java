@@ -1,18 +1,33 @@
 package com.spring.practice.board.model;
 
 import java.sql.Date;
+import java.util.HashSet;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PostVO {
 
 	private int postNo;
 	private Date regDate;
 	private String time;
 	private int views;
-	private int likes;
-	private int dislikes;
+	private HashSet<Integer> likes;
+	private boolean like;
+	private HashSet<Integer> dislikes;
+	private boolean dislike;
 	private String writer;
 	private String title;
 	private String content;
+	
+	PostVO(){
+		if(likes == null) {
+			likes = new HashSet<Integer>();
+		}
+		if(dislikes == null) {
+			dislikes = new HashSet<Integer>();
+		}
+	}
 	
 	public int getPostNo() {
 		return postNo;
@@ -39,18 +54,46 @@ public class PostVO {
 	public void setViews(int views) {
 		this.views = views;
 	}
-	public int getLikes() {
+	
+	public int getLikesNum() {
+		return likes.size();
+	}
+	
+	public HashSet<Integer> getLikes() {
 		return likes;
 	}
-	public void setLikes(int likes) {
+	public void setLikes(HashSet<Integer> likes) {
 		this.likes = likes;
 	}
-	public int getDislikes() {
+	
+	public boolean isLike() {
+		return like;
+	}
+
+	public void setLike(boolean like) {
+		this.like = like;
+	}
+	
+	public int getDislikesNum() {
+		return dislikes.size();
+	}
+
+	public HashSet<Integer> getDislikes() {
 		return dislikes;
 	}
-	public void setDislikes(int dislikes) {
+	public void setDislikes(HashSet<Integer> dislikes) {
 		this.dislikes = dislikes;
 	}
+	
+	
+	public boolean isDislike() {
+		return dislike;
+	}
+
+	public void setDislike(boolean dislike) {
+		this.dislike = dislike;
+	}
+
 	public String getWriter() {
 		return writer;
 	}

@@ -1,5 +1,7 @@
 package com.spring.practice.board.service;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +67,62 @@ public class BoardService implements IBoardService{
 	@Override
 	public void deletePost(int postNo) {
 		mapper.deletePost(postNo);
+	}
+	
+	//좋아요 기능
+	public void postLike(PostVO post, String account) {
+		int hashCode = account.hashCode();
+		HashSet<Integer> likeSet = post.getLikes();
+		HashSet<Integer> dislikeSet = post.getDislikes();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		boolean conLike = likeSet.contains(hashCode);
+		boolean conDisL = dislikeSet.contains(hashCode);
+		map.put("postNo", post.getPostNo());
+		if(!(conLike^conDisL)) {
+			likeSet.add(hashCode);
+			post.setLike(true);
+		}else if((conLike^conDisL) && conLike) {
+			likeSet.remove(hashCode);
+			post.setLike(false);
+		}else {
+			likeSet.add(hashCode);
+			dislikeSet.remove(hashCode);
+			post.setLike(true);
+			post.setDislike(false);
+			map.put("dislikes", dislikeSet);
+			mapper.postDislike(map);
+		}
+		post.setLikes(likeSet);
+		map.put("likes", likeSet);
+		mapper.postLike(map);
+	}
+	
+	public void postDislike(PostVO post, String account) {
+		int hashCode = account.hashCode();
+		HashSet<Integer> likeSet = post.getLikes();
+		HashSet<Integer> dislikeSet = post.getDislikes();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		boolean conLike = likeSet.contains(hashCode);
+		boolean conDisL = dislikeSet.contains(hashCode);
+		map.put("postNo", post.getPostNo());
+		if(!(conLike^conDisL)) {
+			dislikeSet.add(hashCode);
+			post.setDislike(true);
+		}else if((conLike^conDisL) && conDisL) {
+			dislikeSet.remove(hashCode);
+			post.setDislike(false);
+		}else {
+			likeSet.remove(hashCode);
+			dislikeSet.add(hashCode);
+			post.setLike(false);
+			post.setDislike(true);
+			map.put("likes", likeSet);
+			mapper.postLike(map);
+		}
+		post.setLikes(likeSet);
+		post.setDislikes(dislikeSet);
+		map.put("dislikes",dislikeSet);
+		mapper.postDislike(map);
 	}
 
 	

@@ -37,7 +37,7 @@
 			</header>
 			<ul>
 				<li><a href="<c:url value='/' />">Homepage</a></li>
-				<li><a href="<c:url value='/generic' />">Generic</a></li>
+				<li><a href="<c:url value='/version' />">Version</a></li>
 				<li><a href="<c:url value='/elements' />">Elements</a></li>
 				<li><span class="opener">Submenu</span>
 					<ul>

@@ -27,7 +27,8 @@ public interface IBoardService {
 	void deletePost(int postNo);
 	
 	// 좋아요 증가
+	void postLike(PostVO post, String account);
 	
 	// 싫어요 증가
-	
+	void postDislike(PostVO post, String account);
 }

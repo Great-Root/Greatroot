@@ -205,7 +205,7 @@
 								<li><a href="#" class="button small">Small</a></li>
 							</ul>
 							<div class="row">
-								<div class="col-6 col-12-small">
+								<div class="col-12-small">
 									<ul class="actions stacked">
 										<li><a href="#" class="button primary">Default</a></li>
 										<li><a href="#" class="button">Default</a></li>

@@ -20,8 +20,8 @@ public class HomeController {
 		return "index";
 	}
 	
-	@GetMapping("/generic")
-	public void generic() {
+	@GetMapping("/version")
+	public void version() {
 		
 	}
 	

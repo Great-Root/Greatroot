@@ -8,12 +8,13 @@
 		<id property="postNo" column="post_no"/>
 		<result property="regDate" column="reg_date"/>
 		<result property="views" column="views"/>
-		<result property="likes" column="likes"/>
-		<result property="dislikes" column="dislikes"/>
+		<result property="likes" column="likes" typeHandler="com.spring.practice.board.commons.JsonSetTypeHandler" javaType="java.lang.Integer"/>
+		<result property="dislikes" column="dislikes" typeHandler="com.spring.practice.board.commons.JsonSetTypeHandler" javaType="java.lang.Integer"/>
 		<result property="writer" column="writer"/>
 		<result property="title" column="title"/>
 		<result property="content" column="content"/>
 	</resultMap>
+
 	
 	<sql id="search">
 		<!-- 동적 SQL 구문 -->
@@ -76,6 +77,18 @@
 	<update id="updateViews">
 		UPDATE practice_board 
 		SET views = views + 1 
+		WHERE post_no=#{postNo}
+	</update>
+	
+	<update id="postLike">
+		UPDATE practice_board 
+		SET likes = #{likes, typeHandler=com.spring.practice.board.commons.JsonSetTypeHandler,javaType=java.lang.Integer} 
+		WHERE post_no=#{postNo}
+	</update>
+	
+	<update id="postDislike">
+		UPDATE practice_board 
+		SET dislikes = #{dislikes, typeHandler=com.spring.practice.board.commons.JsonSetTypeHandler,javaType=java.lang.Integer} 
 		WHERE post_no=#{postNo}
 	</update>
 

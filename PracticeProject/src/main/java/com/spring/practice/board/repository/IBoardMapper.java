@@ -1,5 +1,6 @@
 package com.spring.practice.board.repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.spring.practice.board.commons.SearchVO;
@@ -29,4 +30,9 @@ public interface IBoardMapper {
 	// 조회수 증가
 	void updateViews(int postNo);
 	
+	// 좋아요 기능
+	void postLike(HashMap<String, Object> map);
+	
+	// 좋아요 기능
+	void postDislike(HashMap<String, Object> map);
 }
