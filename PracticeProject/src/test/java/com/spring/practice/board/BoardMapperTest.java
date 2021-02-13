@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.spring.practice.board.model.PostVO;
+import com.spring.practice.board.commons.SendEmail;
 import com.spring.practice.board.repository.IBoardMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,7 +26,15 @@ public class BoardMapperTest {
 //		post.setContent("아~ 아~ 하나 둘 삼 넷  하나 둘 삼 넷 지금은 테스트 중 입니다.");
 //		mapper.insertPost(post);
 
-		
 	}
+	
+	public static void main(String[] args) {
+		try {
+			new SendEmail("qhrmsqhrms12@naver.com","테스트","<h1>테스트내용</h1>");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 
 }

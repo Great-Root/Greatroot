@@ -51,7 +51,7 @@
 							<tr>
 								<td>
 									<c:if test="${user == null}">
-										<a class="button primary" id="idCheck" style="margin: -7px 0 0 0;">중복검사</a>
+										<a class="button primary" id="idCheck" style="margin: -0.5em 0 0 0;">중복검사</a>
 									</c:if>
 									<span id="idResult" ></span>
 								</td>
@@ -59,14 +59,14 @@
 							<tr>
 								<td>
 									<c:if test="${user != null}">
-									닉네임 <input type="hidden" id="preNick" value="${user.nickname}"/>
+									닉네임 &nbsp&nbsp<input type="button" class="small" id="usePreNick" value="기존 닉네임" style="${user == null ? 'display:none;' : '' }" /><input type="hidden" id="preNick" value="${user.nickname}"/>
 									</c:if>
 									<input type="text" id="nickname" name="nickname" value="${user.nickname}" maxlength="12" placeholder="닉네임" style="margin: 15px 0 0 0;"/>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<a class="button primary" id="nickCheck"  style="margin: 6px 0 0 0;">중복검사</a>
+									<a class="button primary" id="nickCheck"  style="margin: 0.5em 0 0 0;">중복검사</a>
 									<span id="nickResult"></span>
 								</td>
 							</tr>
@@ -74,10 +74,10 @@
 							<tr>
 								<td >
 									<c:if test="${user != null}">
-										<input type="password" id="prePassword" name="prePassword" maxlength="16" placeholder="기존 비밀번호" style="margin: 15px 0 0 0;"/>
+									<div id="a" style="position: relative;"><input type="password" id="prePassword" name="prePassword" maxlength="16" placeholder="기존 비밀번호" style="margin: 15px 1em 0 0;"/><div id="b" style="position: absolute; top: -0.1em; right: 0%;"><input type="button" id="prePassword_Btn" class="primary" value="확인" ${user == null ? 'style="display:none;"' : '' } /></div></div>
 									</c:if>
-									<input type="password" id="password" name="password" maxlength="16" placeholder="비밀번호" style="margin: 15px 0 0 0;"/>
-									<input type="password" id="password_check" name="passwordcheck" maxlength="16" placeholder="비밀번호 확인" style="margin: 5px 0 0 0;"/>
+									<input type="password" id="password" name="password" maxlength="16" placeholder="${user == null ? '' : '변경 ' }비밀번호" style="margin: 15px 0 0 0;"/>
+									<input type="password" id="password_check" name="passwordcheck" maxlength="16" placeholder="${user == null ? '' : '변경 ' }비밀번호 확인" style="margin: 5px 0 0 0;"/>
 								</td>
 							</tr>
 							<tr>
@@ -85,11 +85,11 @@
 							</tr>
 							<tr>
 								<td>
-									<input type="text" id="email" name="email" value="${user.email}" ${user == null ? "" : "readonly" } maxlength="50"  placeholder="이메일"/>
+									<input type="text" id="email" name="email" value="${user.email}" disabled="${user == null ? '' : 'disabled' }" maxlength="50"  placeholder="이메일"/>
 								</td>
 							</tr>
 							<tr>
-								<td height="60"><!-- <a class="button primary" id="mailCheck" >메일인증</a><span id="mailResult"></span> --></td>
+								<td height="60"><input type="button" class="primary" id="mailCheck" name="mailCheck" value="메일인증" style="margin: -0.5em 0 0 0; ${user == null ? '' : 'display:none;' }" /><span id="mailResult"></span><input type="button" id="reConfirmNum_Btn" class="button small" style="display:none; margin-left: 1em;" value="재전송"/><input type="button" id="reConfirmMail_Btn" class="button small" style="display:none; margin-left: 1em;" value="재인증"/></td>
 							</tr>
 							
 							<tr>

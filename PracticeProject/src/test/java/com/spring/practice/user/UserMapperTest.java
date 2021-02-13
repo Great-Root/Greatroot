@@ -1,7 +1,5 @@
 package com.spring.practice.user;
 
-import java.sql.Date;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +19,17 @@ public class UserMapperTest {
 	
 	@Test
 	public void userRegisterTest() {
-//		UserVO user = new UserVO();
-//		System.out.println("회원가입 테스트 시작~");
-//		user.setAccount("testId");
-//		user.setPassword("testPw");
-//		user.setNickname("testNick");
-//		user.setEmail("testEmail");
-//		user.setBirthday(new Date(1993-10-22));
-//		mapper.register(user);
+		UserVO user = new UserVO();
+//		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//		System.out.println("회원정보 수정 시작~");
+//		user.setAccount("");
+//		user.setPassword(encoder.encode(""));
+//		user.setNickname("");
+//		user.setEmail("@.");
+//		user.setBirthday();
+//		mapper.updateAccount();
 //		
-//		System.out.println("회원가입 테스트끝");
+//		System.out.println("회원정보 수정 테스트끝");
 		
 	}
 

@@ -141,4 +141,39 @@ public class UserController {
 		return result;
 	}
 	
+	//인증 메일 발송
+	@PostMapping("/sendConfirmEmail")
+	public String sendConfirmEmail(@RequestBody String email) {
+		return service.sendConfirmEmail(email) ? "OK":"NO";
+	}
+	
+	//메일 인증 확인
+	@GetMapping("/confirmNumCheck")
+	public ModelAndView confirmNumCheck(int emailHash,String confirmNum) {
+		boolean result = service.confirmNumCheck(emailHash,confirmNum);
+		ModelAndView mv = new ModelAndView();
+		if(result) {
+			mv.setViewName("user/result");
+			mv.addObject("msg", "메일인증에 성공했습니다!<br>회원가입 페이지에서 확인을 눌러주세요!");
+		}else {
+			mv.setViewName("user/result");
+			mv.addObject("msg", "메일인증에 실패했습니다<br>다시 시도해 주세요");
+			
+		}
+		return mv;
+	}
+	
+	//홈페이지에서 메일 인증 확인
+	@PostMapping("/isConfirmEmail")
+	public String isConfirmEmail(@RequestBody String email) {
+		return service.isConfirmEmail(email) ? "OK" : "NO" ;
+	}
+	
+	//메일 재인증
+	@PostMapping("/reConfirmEmail")
+	public String reConfirmEmail(@RequestBody String email) {
+		service.deleteConfirmEmail(email);
+		return "OK";
+	}
+	
 }

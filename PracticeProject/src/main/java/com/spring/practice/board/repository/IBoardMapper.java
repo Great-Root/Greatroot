@@ -35,4 +35,6 @@ public interface IBoardMapper {
 	
 	// 좋아요 기능
 	void postDislike(HashMap<String, Object> map);
+	
+
 }

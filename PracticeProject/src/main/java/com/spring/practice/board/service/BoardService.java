@@ -70,6 +70,7 @@ public class BoardService implements IBoardService{
 	}
 	
 	//좋아요 기능
+	@Override
 	public void postLike(PostVO post, String account) {
 		int hashCode = account.hashCode();
 		HashSet<Integer> likeSet = post.getLikes();
@@ -97,6 +98,7 @@ public class BoardService implements IBoardService{
 		mapper.postLike(map);
 	}
 	
+	@Override
 	public void postDislike(PostVO post, String account) {
 		int hashCode = account.hashCode();
 		HashSet<Integer> likeSet = post.getLikes();

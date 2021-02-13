@@ -103,11 +103,11 @@ public class PageCreator {
 	}
 
 
-	@Override
-	public String toString() {
-		return "PageCreator [paging=" + paging + ", postTotalCount=" + postTotalCount + ", beginPage=" + beginPage
-				+ ", endPage=" + endPage + ", prev=" + prev + ", next=" + next + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "PageCreator [paging=" + paging + ", postTotalCount=" + postTotalCount + ", beginPage=" + beginPage
+//				+ ", endPage=" + endPage + ", prev=" + prev + ", next=" + next + "]";
+//	}
 	
 	
 	

@@ -31,7 +31,6 @@
 				success: function(result) {
 					$("#likes").html('<b class="icon">'+result.likeNum+'</b>');
 					$("#dislikes").html('<b class="icon">'+result.dislikeNum+'</b>');
-					console.log(result.like);
 					if(result.like == true && result.dislike == false){
 						$("#likeIcon").removeClass("far");
 						$("#likeIcon").addClass("fas");
@@ -75,8 +74,6 @@
 				success: function(result) {
 					$("#likes").html('<b class="icon">'+result.likeNum+'</b>');
 					$("#dislikes").html('<b class="icon">'+result.dislikeNum+'</b>');
-					console.log(result.like);
-					console.log(result.dislike);
 					if(result.like == true && result.dislike == false){
 						$("#likeIcon").removeClass("far");
 						$("#likeIcon").addClass("fas");

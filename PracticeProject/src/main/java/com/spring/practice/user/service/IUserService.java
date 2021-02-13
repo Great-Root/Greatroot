@@ -3,6 +3,8 @@ package com.spring.practice.user.service;
 import java.sql.Date;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestBody;
+
 import com.spring.practice.user.model.UserVO;
 
 
@@ -34,5 +36,17 @@ public interface IUserService {
 	
 	//세션아이디를 통한 회원 정보 조회 기능
 	UserVO getUserWithSessionId(String sessionId);
+	
+	//인증 메일 발송
+	boolean sendConfirmEmail(String email);
+	
+	//인증 번호 확인
+	boolean confirmNumCheck(int emailHash, String confirmNum);
+	
+	//홈페이지에서 인증 확인
+	boolean isConfirmEmail(String email);
+	
+	//인증메일 삭제
+	void deleteConfirmEmail(String email);
 
 }

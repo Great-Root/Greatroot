@@ -16,6 +16,47 @@
 		<result property="authority" column="authority" />
 		<result property="delDate" column="del_date" />
 	</resultMap>
+	
+	<resultMap id="MailMap" type="com.spring.practice.board.model.MailVO">
+		<id property="emailHash" column="email_hash"/>
+		<result property="confirmNum" column="confirm_num"/>
+		<result property="isConfirm" column="isconfirm"/>
+		<result property="regDate" column="reg_date"/>
+	</resultMap>
+	
+	<select id="checkEmail" resultType="int">
+		SELECT COUNT(email)
+		FROM practice_user
+		WHERE email = #{email}
+	</select>
+	
+	<delete id="deleteConfirmEmail">
+		DELETE FROM mail_confirm WHERE email_hash=#{emailHash}
+	</delete>
+	
+	<delete id="deleteOldData">
+		<![CDATA[ DELETE FROM mail_confirm WHERE reg_date < #{limitDate}]]>
+	</delete>
+	
+	<insert id="insertConfirmNum">
+		INSERT INTO mail_confirm 
+		(email_hash, confirm_num)
+		VALUES (#{emailHash}, #{confirmNum})
+	</insert>
+	
+	<update id="updateIsConfirm">
+		UPDATE mail_confirm
+		SET isconfirm = 1
+		WHERE email_hash = #{emailHash}
+	</update>
+	
+	<select id="selectConfirmNum" resultMap="MailMap">
+		SELECT confirm_num FROM mail_confirm WHERE email_hash = #{emailHash}
+	</select>
+	
+	<select id="selectIsConfirm" resultType="int">
+		SELECT isconfirm FROM mail_confirm WHERE email_hash = #{emailHash}
+	</select>
 
 	<insert id="register">
 		INSERT INTO practice_user
@@ -26,13 +67,13 @@
 	<select id="checkAccount" resultType="int">
 		SELECT COUNT(account)
 		FROM practice_user
-		WHERE account=#{account}
+		WHERE account = #{account}
 	</select>
 	
 	<select id="checkNickName" resultType="int">
 		SELECT COUNT(nickname)
 		FROM practice_user
-		WHERE nickname=#{nickname}
+		WHERE nickname = #{nickname}
 	</select>
 	
 	<update id="updateAccount">
@@ -48,12 +89,12 @@
 	<update id="deleteAccount">
 		UPDATE practice_user
 		SET del_date = #{delDate}
-		WHERE account=#{account}
+		WHERE account = #{account}
 	</update>
 	
 	<select id="getOneUserInfo" resultMap="UserMap">
 		SELECT * FROM practice_user
-		WHERE account=#{account}
+		WHERE account = #{account}
 	</select>
 	
 	<select id="getUserList" resultMap="UserMap">
@@ -62,14 +103,14 @@
 	
 	<update id="keepLogin">
 		UPDATE practice_user
-		SET session_id=#{sessionId},
-		limit_time=#{limitDate}
-		WHERE account=#{account}
+		SET session_id = #{sessionId},
+		limit_time = #{limitDate}
+		WHERE account = #{account}
 	</update>
 	
 	 <select id="getUserWithSessionId" resultMap="UserMap">
 	 	SELECT * FROM practice_user
-	 	WHERE session_id=#{sessionId}
+	 	WHERE session_id = #{sessionId}
 	 </select>
 
 </mapper>

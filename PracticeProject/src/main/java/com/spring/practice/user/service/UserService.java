@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.spring.practice.board.commons.SendEmail;
+import com.spring.practice.board.model.MailVO;
 import com.spring.practice.user.model.UserVO;
 import com.spring.practice.user.repository.IUserMapper;
 
@@ -76,6 +78,68 @@ public class UserService implements IUserService {
 			user = null;
 		}
 		return user;
+	}
+	
+	@Override
+	public boolean sendConfirmEmail(String email) {
+		if (mapper.checkEmail(email) == 0) {
+			Map<String, Object> map = new HashMap<>();
+			int emailHash = email.hashCode();
+			MailVO vo = mapper.selectConfirmNum(emailHash);
+			String confirmNum = "" + (int) (Math.random() * 999999 + 1);
+			String SUBJECT = "GreatRoot 홈페이지 가입 인증 메일입니다!";
+			String CONTENT = "<h2>메일인증을 하시려면 <a href=\"http://localhost/user/confirmNumCheck?emailHash=" + emailHash
+					+ "&confirmNum=" + confirmNum + "\">여기</a>를 클릭 해주세요!</h2>";
+			map.put("emailHash", emailHash);
+			map.put("confirmNum", confirmNum);
+			if (vo != null) {
+				mapper.deleteConfirmEmail(emailHash);
+			}
+			mapper.insertConfirmNum(map);
+			try {
+				new SendEmail(email, SUBJECT, CONTENT);
+				return true;
+			} catch (Exception e) {
+				e.printStackTrace();
+				mapper.deleteConfirmEmail(emailHash);
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean confirmNumCheck(int emailHash, String confirmNum) {
+		MailVO vo = mapper.selectConfirmNum(emailHash);
+		boolean result;
+		if(vo != null && vo.getConfirmNum().equals(confirmNum)) {
+			mapper.updateIsConfirm(emailHash);
+			result = true;
+		}else {
+			result = false;
+		}
+		return result;
+	}
+	
+	@Override
+	public boolean isConfirmEmail(String email) {
+		int emailHash = email.hashCode();
+		int confirm = mapper.selectIsConfirm(emailHash);
+		boolean result;
+		if(confirm == 0) {
+			result = false;
+		}else {
+			mapper.deleteConfirmEmail(emailHash);
+			result = true;
+		}
+		mapper.deleteOldData(new Date(System.currentTimeMillis()-3600000L));
+		return result;
+	}
+	
+	@Override
+	public void deleteConfirmEmail(String email) {
+		mapper.deleteConfirmEmail(email.hashCode());
 	}
 
 }
