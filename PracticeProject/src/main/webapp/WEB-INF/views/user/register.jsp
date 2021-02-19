@@ -59,7 +59,7 @@
 							<tr>
 								<td>
 									<c:if test="${user != null}">
-									닉네임 &nbsp&nbsp<input type="button" class="small" id="usePreNick" value="기존 닉네임" style="${user == null ? 'display:none;' : '' }" /><input type="hidden" id="preNick" value="${user.nickname}"/>
+									닉네임 &nbsp&nbsp<input type="button" class="small" id="usePreNick" value="기존 닉네임 사용" style="${user == null ? 'display:none;' : '' }" /><input type="hidden" id="preNick" value="${user.nickname}"/>
 									</c:if>
 									<input type="text" id="nickname" name="nickname" value="${user.nickname}" maxlength="12" placeholder="닉네임" style="margin: 15px 0 0 0;"/>
 								</td>
@@ -76,16 +76,19 @@
 									<c:if test="${user != null}">
 									<div id="a" style="position: relative;"><input type="password" id="prePassword" name="prePassword" maxlength="16" placeholder="기존 비밀번호" style="margin: 15px 1em 0 0;"/><div id="b" style="position: absolute; top: -0.1em; right: 0%;"><input type="button" id="prePassword_Btn" class="primary" value="확인" ${user == null ? 'style="display:none;"' : '' } /></div></div>
 									</c:if>
-									<input type="password" id="password" name="password" maxlength="16" placeholder="${user == null ? '' : '변경 ' }비밀번호" style="margin: 15px 0 0 0;"/>
-									<input type="password" id="password_check" name="passwordcheck" maxlength="16" placeholder="${user == null ? '' : '변경 ' }비밀번호 확인" style="margin: 5px 0 0 0;"/>
+									<input type="password" id="password" name="password" maxlength="16" placeholder="${user == null ? '비밀번호' : '기존 비밀번호를' }" ${user == null ? '' : 'disabled="disabled" ' } style="margin: 15px 0 0 0; ${user == null ? '' : 'background-color: #D5D5D5;'}"/>
+									<input type="password" id="password_check" name="passwordcheck" maxlength="16" placeholder="${user == null ? '비밀번호 확인' : '먼저 인증해주세요!' }" ${user == null ? '' : 'disabled="disabled" ' } style="margin: 5px 0 0 0; ${user == null ? '' : 'background-color: #D5D5D5;'}"/>
 								</td>
 							</tr>
 							<tr>
-								<td height="30"><span id="pwResult"></span></td>
+								<td height="30">
+								<input type="button" class="small" id="usePrePw" value="기존 비밀번호 사용" style="${user == null ? 'display:none;' : '' }" /><input type="hidden" id="isUsePrePw" value=false />
+								<span id="pwResult"></span>
+								</td>
 							</tr>
 							<tr>
 								<td>
-									<input type="text" id="email" name="email" value="${user.email}" disabled="${user == null ? '' : 'disabled' }" maxlength="50"  placeholder="이메일"/>
+									<input type="text" id="email" name="email" value="${user.email}" ${user == null ? '' : 'disabled="disabled" ' } maxlength="50"  placeholder="이메일" style=" ${user == null ? '' : 'background-color: #D5D5D5;'}"/>
 								</td>
 							</tr>
 							<tr>
@@ -93,7 +96,7 @@
 							</tr>
 							
 							<tr>
-								<td>생년월일<input type="date" id="birthday" name="birthday" value="${user.birthday}" placeholder="생일" style="margin-left: 50px"/></td>
+								<td>생년월일 (선택)<input type="date" id="birthday" name="birthday" value="${user.birthday}" placeholder="생일" style="margin-left: 50px"/></td>
 							</tr>
 							<tr>
 								<td>

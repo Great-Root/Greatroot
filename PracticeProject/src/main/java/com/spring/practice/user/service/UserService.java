@@ -88,7 +88,7 @@ public class UserService implements IUserService {
 			MailVO vo = mapper.selectConfirmNum(emailHash);
 			String confirmNum = "" + (int) (Math.random() * 999999 + 1);
 			String SUBJECT = "GreatRoot 홈페이지 가입 인증 메일입니다!";
-			String CONTENT = "<h2>메일인증을 하시려면 <a href=\"http://localhost/user/confirmNumCheck?emailHash=" + emailHash
+			String CONTENT = "<h2>메일인증을 하시려면 <a href=\"https://www.greatroot.net/user/confirmNumCheck?emailHash=" + emailHash
 					+ "&confirmNum=" + confirmNum + "\">여기</a>를 클릭 해주세요!</h2>";
 			map.put("emailHash", emailHash);
 			map.put("confirmNum", confirmNum);

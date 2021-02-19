@@ -86,6 +86,20 @@
 						$('#prePassword_Btn').removeClass('primary');
 						$('#prePassword_Btn').addClass('disabled');
 						modiChk = true;
+						if ($('#isUsePrePw').val() == "false") {
+							pwChk = false;
+							pwChkChk = false;
+							$('#password').removeAttr("disabled", "disabled");
+							$('#password').attr("placeholder", "변경 비밀번호");
+							$('#password').css("background-color", "white");
+							$('#password_check').removeAttr("disabled", "disabled");
+							$('#password_check').attr("placeholder", "변경 비밀번호 확인");
+							$('#password_check').css("background-color", "white");
+							$('#password').focus();
+						}else{
+							pwChk = true;
+							pwChkChk = true;
+						}
 					} else {
 						modiChk = false;
 						$('#prePassword').val("");
@@ -105,6 +119,45 @@
 
 	});
 
+	//기존 비밀번호 사용 버튼 기능
+	$('#usePrePw').click(function() {
+		if ($('#isUsePrePw').val() == "false") {
+			$('#usePrePw').addClass("primary");
+			$('#isUsePrePw').val('true');
+			$('#password').val('');
+			$('#password_check').val('');
+			$('#password').attr("disabled", "disabled");
+			$('#password').attr("placeholder", "기존 비밀번호 사용이");
+			$('#password').css("background-color", "#D5D5D5");
+			$('#password_check').attr("disabled", "disabled");
+			$('#password_check').attr("placeholder", "활성화 되었습니다");
+			$('#password_check').css("background-color", "#D5D5D5");
+			$('#pwResult').html('<b style="font-size:14px; color:green;">&nbsp&nbsp기존 비밀번호 사용</b>');
+			pwChk = true;
+			pwChkChk = true;
+		} else if ($('#prePassword_Btn').val() == "인증됨" && $('#isUsePrePw').val() == "true") {
+			$('#usePrePw').removeClass("primary");
+			$('#isUsePrePw').val('false');
+			$('#password').removeAttr("disabled", "disabled");
+			$('#password').attr("placeholder", "변경 비밀번호");
+			$('#password').css("background-color", "white");
+			$('#password_check').removeAttr("disabled", "disabled");
+			$('#password_check').attr("placeholder", "변경 비밀번호 확인");
+			$('#password_check').css("background-color", "white");
+			$('#password').focus();
+			$('#pwResult').html('');
+			pwChk = false;
+			pwChkChk = false;
+		}else{
+			$('#usePrePw').removeClass("primary");
+			$('#isUsePrePw').val('false');
+			$('#password').attr("placeholder", "기존 비밀번호를");
+			$('#password_check').attr("placeholder", "먼저 인증해 주세요!");
+			$('#pwResult').html('');
+			pwChk = false;
+			pwChkChk = false;
+		}
+	});
 
 	//비밀번호 입력값 검증.
 	$('#password').on('keyup', function() {
@@ -238,10 +291,11 @@
 		} else {
 			$("#nickname").css("background-color", "pink");
 			$("#nickResult").html('<b style="font-size:14px; color:red;">&nbsp&nbsp닉네임을 다시 확인해주세요</b>');
+			nickOverlapChk = false;
 		}
 	});
-	
-	$('#usePreNick').click(function(){
+
+	$('#usePreNick').click(function() {
 		$("#nickname").val($('#preNick').val());
 		$("#nickCheck").click();
 	});
@@ -289,7 +343,7 @@
 					if (result === "OK") {
 						$("#mailCheck").val("확인");
 						$("#email").css("background-color", "#D9E5FF");
-						$("#mailResult").html('<b style="font-size:14px; color:black;">&nbsp&nbsp인증메일이 발송되었습니다. 해당 메일을 확인해주세요!&nbsp&nbsp</b>');
+						$("#mailResult").html('<b style="font-size:14px; color:black;">&nbsp&nbsp인증메일이 발송되었습니다. 해당 메일을 확인해주세요! (이 페이지는 닫지 말아주세요!)&nbsp&nbsp</b>');
 						$("#reConfirmNum_Btn").css("display", "");
 						$("#reConfirmMail_Btn").css("display", "");
 						mailConfirm = false;
@@ -412,6 +466,9 @@
 
 	//사용자가 회원가입 버튼을 눌렀을 때 이벤트 처리
 	$('#signup-btn').click(function() {
+		$('#idCheck').click();
+		$('#nickCheck').click();
+		
 		if (idOverlapChk && idchk && pwChk && pwChkChk && nickChk && nickOverlapChk && mailChk && mailConfirm) {
 			const id = $('#account').val();
 			const pw = $('#password').val();
@@ -459,12 +516,21 @@
 	//회원 정보 수정 완료 버튼이 눌렸을 때
 	$('#modify-btn').click(function() {
 		$("#nickCheck").click();
+		$('#prePassword_Btn').click();
+		console.log("비밀번호 : "+ pwChk);
+		console.log("비밀번호 확인 : "+ pwChkChk);
+		console.log("닉네임 : "+ nickChk);
+		console.log("닉네임 중복 : "+ nickOverlapChk);
+		console.log("기존 비밀번호 : "+ modiChk);
 		if (pwChk && pwChkChk && nickChk && nickOverlapChk && modiChk) {
 			const id = $('#account').val();
-			const pw = $('#password').val();
 			const name = $('#nickname').val();
 			const email = $('#email').val();
 			const birthday = $('#birthday').val();
+			var pw = $('#password').val();
+			if($('#isUsePrePw').val() == "true"){
+				pw = $('#prePassword').val();
+			}
 
 			const user = {
 				account: id,
@@ -497,15 +563,12 @@
 			});
 
 		} else {
-			pwChk = false;
-			pwChkChk = false;
 			$('#password').val("");
 			$('#password_check').val("");
-			$('#password_check').css("background-color", "pink");
-			$('#password_check').attr("placeholder", "변경 비밀번호 확인(다시 작성해주세요!)");
-			$('#password').css("background-color", "pink");
-			$('#password').attr("placeholder", "변경 비밀번호 (다시 작성해주세요!)");
-			$('#pwResult').html('<b style="font-size:14px;color:red;">&nbsp&nbsp변경 비밀번호를 다시 작성해주세요</b>');
+			$('#password').focus();
+			$("#pwResult").html('');
+			pwChk = false;
+			pwChkChk = false;
 			alert('입력 정보를 다시 확인하세요!');
 		}
 

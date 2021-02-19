@@ -2,6 +2,7 @@
 	
 	//로그인 버튼을 클릭 이벤트
 	$('#signIn-btn').click(function() {
+
 		const id = $('#sign_account').val();
 		const pw = $('#sign_password').val();
 			
@@ -30,7 +31,7 @@
 					$('#sign_password').val("");
 					$('#sign_account').focus();
 				} else if(data === "loginSuccess") {
-					self.location = "/";
+					self.location = document.location.href; //현재위치 리다이렉트
 				}
 					
 			},
