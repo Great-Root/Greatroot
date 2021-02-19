@@ -517,11 +517,6 @@
 	$('#modify-btn').click(function() {
 		$("#nickCheck").click();
 		$('#prePassword_Btn').click();
-		console.log("비밀번호 : "+ pwChk);
-		console.log("비밀번호 확인 : "+ pwChkChk);
-		console.log("닉네임 : "+ nickChk);
-		console.log("닉네임 중복 : "+ nickOverlapChk);
-		console.log("기존 비밀번호 : "+ modiChk);
 		if (pwChk && pwChkChk && nickChk && nickOverlapChk && modiChk) {
 			const id = $('#account').val();
 			const name = $('#nickname').val();
