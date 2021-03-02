@@ -41,7 +41,7 @@ div.write {
 						
 							<input type="text" name="writer" value="${login.account}" readonly />
 							<input type="text" id="title" name="title" value="${post.title}" maxlength="80" placeholder="제목을 작성해주세요~"/>
-							<textarea id="content" name="content" rows="10" placeholder="내용을 입력해 주세요~" maxlength="800">${post.content}</textarea><br>
+							<textarea id="content" name="content" class="autosize" rows="10" placeholder="내용을 입력해 주세요~" maxlength="800">${post.content}</textarea><br>
 							
 						</div>
 					</div>

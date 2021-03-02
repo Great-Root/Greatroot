@@ -19,6 +19,7 @@ public class PostVO {
 	private String writer;
 	private String title;
 	private String content;
+	private int commentNum;
 	
 	PostVO(){
 		if(likes == null) {
@@ -113,6 +114,16 @@ public class PostVO {
 	public void setContent(String content) {
 		this.content = content.replaceAll("<%|%>|<!--|-->", "♡");
 	}
+	
+
+	public int getCommentNum() {
+		return commentNum;
+	}
+
+	public void setCommentNum(int commentNum) {
+		this.commentNum = commentNum;
+	}
+
 	@Override
 	public String toString() {
 		return "PostVO [postNo=" + postNo + ", regDate=" + regDate + ", views=" + views + ", likes=" + likes

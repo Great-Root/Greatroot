@@ -83,6 +83,12 @@ public class UserVO {
 	public void setDelDate(Date delDate) {
 		this.delDate = delDate;
 	}
+	@Override
+	public String toString() {
+		return "UserVO [account=" + account + ", nickname=" + nickname + ", birthday=" + birthday + ", email=" + email
+				+ ", regDate=" + regDate + ", sessionId=" + sessionId + ", limitTime=" + limitTime + ", autoLogin="
+				+ autoLogin + ", authority=" + authority + ", delDate=" + delDate + "]";
+	}
 	
 	
 	

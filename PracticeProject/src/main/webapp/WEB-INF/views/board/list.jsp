@@ -61,7 +61,7 @@
 										<option value="titleContent"
 											${param.condition == 'titleContent' ? 'selected' : ''}>제목+내용</option>
 								</select></td>
-								<td width="700"><input type="text" name="keyword" id="keyword" placeholder="Search" /></td>
+								<td width="700"><input type="text" name="keyword" id="keyword" placeholder="Search" value="${param.keyword}"/></td>
 								<td><input type="submit" value="검색" class="button primary"></td>
 							</tr>
 							
@@ -79,8 +79,8 @@
 									<td>${post.postNo}</td>
 									<td>
 									<a href="<c:url value='/board/postView/${post.postNo}${pc.makeURI(pc.paging.page)}'/>" >${post.title}</a>
-									<span style="font-size: 0.7em;"><br>${post.writer} &nbsp;&bull;&nbsp; ${post.time} &nbsp;&bull;&nbsp; 조회수 ${post.views}회 &nbsp;&nbsp;&nbsp; <i class="icon for fa-thumbs-up"></i>&nbsp; ${post.likesNum} &nbsp;&nbsp;&nbsp; <i class="icon for fa-thumbs-down"></i>&nbsp;${post.dislikesNum}</span>
-									</td>
+									<span style="font-size: 0.7em;"><br>${post.writer} &nbsp;&bull;&nbsp; ${post.time} &nbsp;&bull;&nbsp; 조회수 ${post.views}회 &nbsp;&nbsp;&nbsp; <i class="icon for fa-thumbs-up"></i>&nbsp; ${post.likesNum} &nbsp;&nbsp;&nbsp; <i class="icon for fa-thumbs-down"></i>&nbsp;${post.dislikesNum} &nbsp;&nbsp;&nbsp; <i class="icon far fa-comment-alt"></i>&nbsp;${post.commentNum}</span>
+									</td>											
 								</tr>
 							</c:forEach>
 						</tbody>

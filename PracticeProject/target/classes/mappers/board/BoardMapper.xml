@@ -14,6 +14,18 @@
 		<result property="title" column="title"/>
 		<result property="content" column="content"/>
 	</resultMap>
+	
+	<resultMap id="CommentMap" type="com.spring.practice.board.model.CommentVO">
+		<id property="commentNo" column="comment_no"/>
+		<result property="postNo" column="post_no" />
+		<result property="commentWriter" column="writer" />
+		<result property="commentContent" column="content"/>
+		<result property="regDate" column="reg_date"/>
+		<result property="likes" column="likes" typeHandler="com.spring.practice.board.commons.JsonSetTypeHandler" javaType="java.lang.Integer"/>
+		<result property="dislikes" column="dislikes" typeHandler="com.spring.practice.board.commons.JsonSetTypeHandler" javaType="java.lang.Integer"/>
+		<result property="nickname" column="nickname" />
+		<result property="ismodify" column="ismodify" />
+	</resultMap>
 
 	
 	<sql id="search">
@@ -45,51 +57,90 @@
 		AND rn <= #{page} * #{countPerPage}
 		]]>
 	</select>
-	
+	<!-- 작성글 총 갯수 -->
 	<select id="totalNumOfPosts" resultType="int">
 		SELECT count(*) 
 		FROM practice_board
 		<include refid="search" />
 	</select>
 	
+	<!-- 게시글 한개 보기 -->
 	<select id="getPost" resultMap="PostMap">
-		SELECT * FROM practice_board 
+		SELECT * FROM practice_board
 		WHERE post_no=#{postNo}
 	</select>
-	
+	<!-- 게시글 삭제 -->
+	<delete id="delAllComment">
+		DELETE FROM practice_comment
+		WHERE post_no=#{postNo}
+	</delete>
 	<delete id="deletePost">
 		DELETE FROM practice_board
 		WHERE post_no=#{postNo}
 	</delete>
-	
+	<!-- 게시글 작성 -->
 	<insert id="insertPost">
 		INSERT INTO practice_board 
 		(post_no, writer,title,content) 
 		VALUES(post_seq.NEXTVAL,#{writer},#{title},#{content})
 	</insert>
-	
+	<!-- 게시글 수정 -->
 	<update id="updatePost">
 		UPDATE practice_board 
 		SET title=#{title}, content=#{content} 
 		WHERE post_no=#{postNo}
 	</update>
-	
+	<!-- 조회수 증가 -->
 	<update id="updateViews">
 		UPDATE practice_board 
-		SET views = views + 1 
+		SET views = views + 1
 		WHERE post_no=#{postNo}
 	</update>
-	
+	<!-- 조회수 감소 -->
+	<update id="downViews">
+		UPDATE practice_board 
+		SET views = views - 1 
+		WHERE post_no=#{postNo}
+	</update>
+	<!-- 좋아요 기능 -->
 	<update id="postLike">
 		UPDATE practice_board 
 		SET likes = #{likes, typeHandler=com.spring.practice.board.commons.JsonSetTypeHandler,javaType=java.lang.Integer} 
 		WHERE post_no=#{postNo}
 	</update>
-	
+	<!-- 싫어요 기능 -->
 	<update id="postDislike">
 		UPDATE practice_board 
 		SET dislikes = #{dislikes, typeHandler=com.spring.practice.board.commons.JsonSetTypeHandler,javaType=java.lang.Integer} 
 		WHERE post_no=#{postNo}
 	</update>
+	<!-- 댓글 작성 -->
+	<insert id="setComment">
+		INSERT INTO practice_comment
+		(comment_no, post_no, writer,content,nickname) 
+		VALUES(comment_seq.NEXTVAL,#{postNo},#{commentWriter},#{commentContent},#{nickname})
+	</insert>
+	<!-- 게시글 댓글 갯수 -->
+	<select id="commentNum" resultType="int">
+		SELECT count(*)
+		FROM practice_comment
+		WHERE post_no=#{postNo}
+	</select>
+	<!-- 댓글 보기 -->
+	<select id="getComment" resultMap="CommentMap">
+		SELECT * FROM practice_comment
+		WHERE post_no = #{postNo} ORDER BY comment_no DESC
+	</select>
+	<!-- 댓글 수정 -->
+	<update id="updateComment">
+		UPDATE practice_comment
+		SET content=#{commentContent}, ismodify = '(수정됨)'
+		WHERE comment_no=#{commentNo}
+	</update>
+	<!-- 댓글 삭제 -->
+	<delete id="deleteComment">
+		DELETE FROM practice_comment
+		WHERE comment_no=#{commentNo}
+	</delete>	
 
 </mapper>

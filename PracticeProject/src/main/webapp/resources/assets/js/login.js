@@ -31,7 +31,7 @@
 					$('#sign_password').val("");
 					$('#sign_account').focus();
 				} else if(data === "loginSuccess") {
-					self.location = document.location.href; //현재위치 리다이렉트
+					window.location.reload(); //현재위치 reload
 				}
 					
 			},

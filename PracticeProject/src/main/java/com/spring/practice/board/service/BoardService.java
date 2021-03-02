@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.practice.board.commons.SearchVO;
+import com.spring.practice.board.model.CommentVO;
 import com.spring.practice.board.model.PostVO;
 import com.spring.practice.board.repository.IBoardMapper;
 
@@ -38,7 +39,7 @@ public class BoardService implements IBoardService{
 			}else {
 				vo.setTime(sec/31536000+"년 전");
 			}
-			
+			vo.setCommentNum(mapper.commentNum(vo.getPostNo()));
 		}
 		return list;
 	}
@@ -46,6 +47,11 @@ public class BoardService implements IBoardService{
 	@Override
 	public int totalNumOfPosts(SearchVO search) {
 		return mapper.totalNumOfPosts(search);
+	}
+	
+	@Override
+	public int commentNum(int postNo) {
+		return mapper.commentNum(postNo);
 	}
 	
 	@Override
@@ -61,17 +67,21 @@ public class BoardService implements IBoardService{
 
 	@Override
 	public void updatePost(PostVO post) {
+		mapper.downViews(post.getPostNo());
+		mapper.downViews(post.getPostNo());
 		mapper.updatePost(post);
 	}
 
 	@Override
 	public void deletePost(int postNo) {
+		mapper.delAllComment(postNo);
 		mapper.deletePost(postNo);
 	}
 	
 	//좋아요 기능
 	@Override
 	public void postLike(PostVO post, String account) {
+		mapper.downViews(post.getPostNo());
 		int hashCode = account.hashCode();
 		HashSet<Integer> likeSet = post.getLikes();
 		HashSet<Integer> dislikeSet = post.getDislikes();
@@ -100,6 +110,7 @@ public class BoardService implements IBoardService{
 	
 	@Override
 	public void postDislike(PostVO post, String account) {
+		mapper.downViews(post.getPostNo());
 		int hashCode = account.hashCode();
 		HashSet<Integer> likeSet = post.getLikes();
 		HashSet<Integer> dislikeSet = post.getDislikes();
@@ -127,5 +138,43 @@ public class BoardService implements IBoardService{
 		mapper.postDislike(map);
 	}
 
+	@Override
+	public void setComment(CommentVO comment) {
+		mapper.setComment(comment);
+	}
+	
+	@Override
+	public void deleteComment(int commentNo) {
+		mapper.downViews(commentNo);
+		mapper.deleteComment(commentNo);
+	}
+	@Override
+	public List<CommentVO> getComment(int postNo) {
+		List<CommentVO> list = mapper.getComment(postNo);
+		for(CommentVO vo:list) {
+			long sec = (System.currentTimeMillis() - vo.getRegDate().getTime())/1000L;
+			if(sec < 60) {
+				vo.setTime(sec+"초 전");
+			}else if(sec < 3600) {
+				vo.setTime(sec/60+"분 전");
+			}else if(sec < 86400) {
+				vo.setTime(sec/3600+"시간 전");
+			}else if(sec < 604800) {
+				vo.setTime(sec/86400+"일 전");
+			}else if(sec < 2592000) {
+				vo.setTime(sec/604800+"주 전");
+			}else if(sec < 31536000) {
+				vo.setTime(sec/2592000+"개월 전");
+			}else {
+				vo.setTime(sec/31536000+"년 전");
+			}
+		}
+		return list;
+	}
+	@Override
+	public void updateComment(CommentVO comment) {
+		mapper.downViews(comment.getPostNo());
+		mapper.updateComment(comment);
+	}
 	
 }

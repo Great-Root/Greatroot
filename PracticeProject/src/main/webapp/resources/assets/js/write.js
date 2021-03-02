@@ -18,5 +18,10 @@
 			formElement.submit();
 		}
 	});
+	
+	//TextArea AutoSize
+	$("textarea.autosize").on('keydown keyup', function () {
+  		$(this).height(178).height( $(this).prop('scrollHeight')+12);	
+	});
 
 })(jQuery);

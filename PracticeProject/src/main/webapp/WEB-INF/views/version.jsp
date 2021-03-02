@@ -43,6 +43,16 @@
 
 					<div class="row">
 						<div class="col-12-small">
+							<h2>1.5.0 (21.2.28)</h2>
+							<ul>
+								<li><a href="/board/postView/62">댓글 기능 구현</a></li>
+							</ul>
+							<h2>1.4.2 (21.2.22)</h2>
+							<ul>
+								<li><a href="/board/postView/61">404, 500 에러페이지 구축</a></li>
+								<li><a href="/board/postView/61">조회수 버그 수정</a></li>
+								<li><a href="/board/postView/61">상세글 작성날짜, 조회수 항목 추가</a></li>
+							</ul>
 							<h2>1.4.1 (21.2.13)</h2>
 							<ul>
 								<li><a href="/board/postView/60">회원 정보 변경 버그 수정</a></li>
