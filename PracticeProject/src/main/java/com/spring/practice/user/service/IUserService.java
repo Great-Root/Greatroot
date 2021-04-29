@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.spring.practice.user.model.MailVO;
 import com.spring.practice.user.model.UserVO;
 
 
@@ -38,15 +39,12 @@ public interface IUserService {
 	UserVO getUserWithSessionId(String sessionId);
 	
 	//인증 메일 발송
-	boolean sendConfirmEmail(String email);
+	boolean sendConfirmEmail(MailVO vo);
 	
-	//인증 번호 확인
-	boolean confirmNumCheck(int emailHash, String confirmNum);
+	//메일 인증 확인
+	public boolean confirmNumCheck(MailVO vo);
 	
 	//홈페이지에서 인증 확인
-	boolean isConfirmEmail(String email);
-	
-	//인증메일 삭제
-	void deleteConfirmEmail(String email);
+	public boolean isConfirmEmail(String email);
 
 }

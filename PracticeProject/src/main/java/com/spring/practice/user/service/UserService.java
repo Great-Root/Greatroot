@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.spring.practice.board.commons.SendEmail;
-import com.spring.practice.board.model.MailVO;
+import com.spring.practice.user.commons.MailUtils;
+import com.spring.practice.user.commons.TempKey;
+import com.spring.practice.user.model.MailVO;
 import com.spring.practice.user.model.UserVO;
 import com.spring.practice.user.repository.IUserMapper;
 
@@ -19,6 +22,8 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private IUserMapper mapper;
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	@Override
 	public void register(UserVO user) {
@@ -79,42 +84,46 @@ public class UserService implements IUserService {
 		}
 		return user;
 	}
-	
+
 	@Override
-	public boolean sendConfirmEmail(String email) {
-		if (mapper.checkEmail(email) == 0) {
-			Map<String, Object> map = new HashMap<>();
-			int emailHash = email.hashCode();
-			MailVO vo = mapper.selectConfirmNum(emailHash);
-			String confirmNum = "" + (int) (Math.random() * 999999 + 1);
-			String SUBJECT = "GreatRoot 홈페이지 가입 인증 메일입니다!";
-			String CONTENT = "<h2>메일인증을 하시려면 <a href=\"https://www.greatroot.net/user/confirmNumCheck?emailHash=" + emailHash
-					+ "&confirmNum=" + confirmNum + "\">여기</a>를 클릭 해주세요!</h2>";
-			map.put("emailHash", emailHash);
-			map.put("confirmNum", confirmNum);
-			if (vo != null) {
-				mapper.deleteConfirmEmail(emailHash);
-			}
-			mapper.insertConfirmNum(map);
-			try {
-				new SendEmail(email, SUBJECT, CONTENT);
-				return true;
-			} catch (Exception e) {
-				e.printStackTrace();
-				mapper.deleteConfirmEmail(emailHash);
-				return false;
-			}
-		} else {
-			return false;
+	public boolean sendConfirmEmail(MailVO vo) {
+		boolean result = false;
+		// 임의의 authkey 생성
+		String authkey = new TempKey().getKey(50, false);
+		vo.setUserKey(authkey);
+		if (mapper.checkEmail(vo.getEmail()) == 0) {
+			mapper.setAuthkey(vo);
+		}else {
+			mapper.updateAuthkey(vo);
 		}
+		try {
+			// mail 작성 관련
+			MailUtils sendMail = new MailUtils(mailSender);
+			sendMail.setSubject("[GreatRoot] 회원가입 이메일 인증");
+			sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
+					.append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
+					.append("<a href='http://localhost/user/confirmNumCheck?email=")
+					.append(vo.getEmail())
+					.append("&userKey=")
+					.append(authkey)
+					.append("' target='_blenk'>이메일 인증 확인</a>")
+					.toString());
+			sendMail.setFrom("qhrmsqhrms12@naver.com", "GreatRoot");
+			sendMail.setTo(vo.getEmail());
+			sendMail.send();
+			result = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	@Override
-	public boolean confirmNumCheck(int emailHash, String confirmNum) {
-		MailVO vo = mapper.selectConfirmNum(emailHash);
+	public boolean confirmNumCheck(MailVO vo) {
+		MailVO DBvo = mapper.getConfirmInfo(vo);
 		boolean result;
-		if(vo != null && vo.getConfirmNum().equals(confirmNum)) {
-			mapper.updateIsConfirm(emailHash);
+		if(vo != null && DBvo.getUserKey().equals(vo.getUserKey())) {
+			mapper.updateConfirmInfo(vo);
 			result = true;
 		}else {
 			result = false;
@@ -124,22 +133,16 @@ public class UserService implements IUserService {
 	
 	@Override
 	public boolean isConfirmEmail(String email) {
-		int emailHash = email.hashCode();
-		int confirm = mapper.selectIsConfirm(emailHash);
-		boolean result;
-		if(confirm == 0) {
-			result = false;
-		}else {
-			mapper.deleteConfirmEmail(emailHash);
-			result = true;
-		}
-		mapper.deleteOldData(new Date(System.currentTimeMillis()-3600000L));
+		MailVO vo = new MailVO();
+		vo.setEmail(email);
+		vo = mapper.getConfirmInfo(vo);
+		boolean result = vo.getUserKey().equals("Y") ? true : false;
 		return result;
 	}
-	
-	@Override
-	public void deleteConfirmEmail(String email) {
-		mapper.deleteConfirmEmail(email.hashCode());
-	}
+//	
+//	@Override
+//	public void deleteConfirmEmail(String email) {
+//		mapper.deleteConfirmEmail(email.hashCode());
+//	}
 
 }

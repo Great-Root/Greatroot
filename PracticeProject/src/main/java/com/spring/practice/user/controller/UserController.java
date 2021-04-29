@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
+import com.spring.practice.user.model.MailVO;
 import com.spring.practice.user.model.UserVO;
 import com.spring.practice.user.service.IUserService;
 
@@ -144,13 +145,15 @@ public class UserController {
 	//인증 메일 발송
 	@PostMapping("/sendConfirmEmail")
 	public String sendConfirmEmail(@RequestBody String email) {
-		return service.sendConfirmEmail(email) ? "OK":"NO";
+		MailVO vo = new MailVO();
+		vo.setEmail(email);
+		return service.sendConfirmEmail(vo) ? "OK":"NO";
 	}
 	
 	//메일 인증 확인
 	@GetMapping("/confirmNumCheck")
-	public ModelAndView confirmNumCheck(int emailHash,String confirmNum) {
-		boolean result = service.confirmNumCheck(emailHash,confirmNum);
+	public ModelAndView confirmNumCheck(MailVO vo) {
+		boolean result = service.confirmNumCheck(vo);
 		ModelAndView mv = new ModelAndView();
 		if(result) {
 			mv.setViewName("user/result");
@@ -158,7 +161,6 @@ public class UserController {
 		}else {
 			mv.setViewName("user/result");
 			mv.addObject("msg", "메일인증에 실패했습니다<br>다시 시도해 주세요");
-			
 		}
 		return mv;
 	}
@@ -166,14 +168,8 @@ public class UserController {
 	//홈페이지에서 메일 인증 확인
 	@PostMapping("/isConfirmEmail")
 	public String isConfirmEmail(@RequestBody String email) {
+		System.out.println(service.isConfirmEmail(email));
 		return service.isConfirmEmail(email) ? "OK" : "NO" ;
-	}
-	
-	//메일 재인증
-	@PostMapping("/reConfirmEmail")
-	public String reConfirmEmail(@RequestBody String email) {
-		service.deleteConfirmEmail(email);
-		return "OK";
 	}
 	
 }

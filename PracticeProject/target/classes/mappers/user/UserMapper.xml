@@ -17,45 +17,38 @@
 		<result property="delDate" column="del_date" />
 	</resultMap>
 	
-	<resultMap id="MailMap" type="com.spring.practice.board.model.MailVO">
-		<id property="emailHash" column="email_hash"/>
-		<result property="confirmNum" column="confirm_num"/>
-		<result property="isConfirm" column="isconfirm"/>
+	<resultMap id="MailMap" type="com.spring.practice.user.model.MailVO">
+		<id property="email" column="email"/>
+		<result property="userKey" column="user_key"/>
 		<result property="regDate" column="reg_date"/>
 	</resultMap>
 	
 	<select id="checkEmail" resultType="int">
 		SELECT COUNT(email)
-		FROM practice_user
+		FROM mail_confirm 
 		WHERE email = #{email}
 	</select>
+
 	
-	<delete id="deleteConfirmEmail">
-		DELETE FROM mail_confirm WHERE email_hash=#{emailHash}
-	</delete>
-	
-	<delete id="deleteOldData">
-		<![CDATA[ DELETE FROM mail_confirm WHERE reg_date < #{limitDate}]]>
-	</delete>
-	
-	<insert id="insertConfirmNum">
+	<insert id="setAuthkey">
 		INSERT INTO mail_confirm 
-		(email_hash, confirm_num)
-		VALUES (#{emailHash}, #{confirmNum})
+		(email, user_key)
+		VALUES (#{email}, #{userKey})
+	</insert>
+	<insert id="updateAuthkey">
+		UPDATE mail_confirm 
+		SET user_key = #{userKey}
+		WHERE email = #{email}
 	</insert>
 	
-	<update id="updateIsConfirm">
+	<update id="updateConfirmInfo">
 		UPDATE mail_confirm
-		SET isconfirm = 1
-		WHERE email_hash = #{emailHash}
+		SET user_key = 'Y'
+		WHERE email = #{email}
 	</update>
 	
-	<select id="selectConfirmNum" resultMap="MailMap">
-		SELECT confirm_num FROM mail_confirm WHERE email_hash = #{emailHash}
-	</select>
-	
-	<select id="selectIsConfirm" resultType="int">
-		SELECT isconfirm FROM mail_confirm WHERE email_hash = #{emailHash}
+	<select id="getConfirmInfo" resultMap="MailMap">
+		SELECT * FROM mail_confirm WHERE email = #{email}
 	</select>
 
 	<insert id="register">

@@ -440,7 +440,7 @@
 		const email = $("#email").val();
 		$.ajax({
 			type: "POST",
-			url: "/user/reConfirmEmail",
+			url: "/user/sendConfirmEmail",
 			headers: {
 				"Content-Type": "application/json"
 			},

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.spring.practice.board.commons.SendEmail;
 import com.spring.practice.board.repository.IBoardMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,13 +27,13 @@ public class BoardMapperTest {
 
 	}
 	
-	public static void main(String[] args) {
-		try {
-			new SendEmail("qhrmsqhrms12@naver.com","테스트","<h1>테스트내용</h1>");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	public static void main(String[] args) {
+//		try {
+//			new SendEmail("qhrmsqhrms12@naver.com","테스트","<h1>테스트내용</h1>");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 
 }

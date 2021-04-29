@@ -19,26 +19,17 @@
 
 
 	<dependencies>
-		<!-- aws-java-sdk-ses -->
 
+		<!-- Mail -->
 		<dependency>
-			<groupId>com.amazonaws</groupId>
-			<artifactId>aws-java-sdk-ses</artifactId>
-			<version>1.11.490</version>
-		</dependency>
-
-
-
-		<!-- Amazon Email -->
-		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>javax.mail-api</artifactId>
-			<version>1.5.5</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>javax.mail</artifactId>
-			<version>1.5.5</version>
+			<version>1.6.1</version>
 		</dependency>
 
 		<!-- Spring -->
@@ -102,12 +93,15 @@
 			<version>3.3.1</version>
 		</dependency>
 
-		<!-- ojdbc8 -->
+
+		<!-- ojdbc6 -->
 		<dependency>
-			<groupId>com.oracle.database.jdbc</groupId>
-			<artifactId>ojdbc8</artifactId>
-			<version>18.3.0.0</version>
+		    <groupId>com.oracle.database.jdbc</groupId>
+		    <artifactId>ojdbc6</artifactId>
+		    <version>11.2.0.4</version>
 		</dependency>
+
+		
 
 		<!-- JSON -->
 		<dependency>

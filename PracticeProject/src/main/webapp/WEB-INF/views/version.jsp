@@ -43,6 +43,10 @@
 
 					<div class="row">
 						<div class="col-12-small">
+							<h2>1.5.1 (21.3.6)</h2>
+							<ul>
+								<li><a href="/board/postView/79">이메일 재구현 (AWS SES -> javax.mail)</a></li>
+							</ul>
 							<h2>1.5.0 (21.2.28)</h2>
 							<ul>
 								<li><a href="/board/postView/62">댓글 기능 구현</a></li>
